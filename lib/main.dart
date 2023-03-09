@@ -75,13 +75,18 @@ class _ValueScreenState extends State<ValueScreen> {
 
     final file = File('${dir!.path}/$sensor.csv');
 
-    print(file);
-
     if (await file.exists()) {
+      print('File deletion done');
       await file.delete();
     }
 
+    print(rows);
+
     await file.writeAsString(csvString);
+    acclValueRecorded = [];
+    gyroValueRecorded = [];
+    rows = [];
+    print(rows);
   }
 
   void timerCreate(int userTime) {
