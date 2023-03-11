@@ -1,15 +1,25 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+
+import 'firebase_options.dart';
 
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:external_path/external_path.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:external_path/external_path.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'package:sensors_plus/sensors_plus.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -45,9 +55,19 @@ class _ValueScreenState extends State<ValueScreen> {
   Timer? time;
   bool _start = false;
   bool _permission = true;
-  int timerValue = 10;
+  int timerValue = 60;
+  var timeStamp = 0.000;
   final controller = TextEditingController();
 
+  // void _sendSOS(String msg, List<String> recipients) async {
+  //   String result =
+  //       await sendSMS(message: msg, recipients: recipients).catchError((error) {
+  //     print(error);
+  //   });
+  //   print(result);
+  // }
+
+  //^ To convert list to csv file
   getCsv(List finalValues, String sensor, String activity) async {
     // if (await Permission.storage.isDenied) {
     //   print('Hello');
@@ -66,7 +86,9 @@ class _ValueScreenState extends State<ValueScreen> {
     List<List<dynamic>> rows = [];
 
     for (var data in finalValues) {
-      rows.add([data[0], data[1], data[2], activity]);
+      timeStamp += 0.200;
+      print(timeStamp);
+      rows.add([timeStamp, data[0], data[1], data[2], activity]);
     }
 
     String csvString = const ListToCsvConverter().convert(rows);
@@ -83,12 +105,15 @@ class _ValueScreenState extends State<ValueScreen> {
     print(rows);
 
     await file.writeAsString(csvString);
+    // _sendSOS('Bachao koi PK ko ', ['+91 97470 16882']);
     acclValueRecorded = [];
     gyroValueRecorded = [];
     rows = [];
+    timeStamp = 0;
     print(rows);
   }
 
+  //& Triggers the timer to track activity
   void timerCreate(int userTime) {
     accel = accelerometerEvents.listen((event) {
       setState(() {
@@ -116,6 +141,7 @@ class _ValueScreenState extends State<ValueScreen> {
       });
       acclValueRecorded.add(displayAcclUser);
       gyroValueRecorded.add(displayGyroUser);
+
       if (timer.tick % 5 == 0 && timer.tick != 0) {
         setState(() {
           timerValue--;
@@ -129,9 +155,10 @@ class _ValueScreenState extends State<ValueScreen> {
         gyro!.cancel();
         setState(() {
           _start = !_start;
-          timerValue = 10;
+          timerValue = 60;
         });
         getCsv(acclValueRecorded, 'accl', controller.text.toUpperCase());
+        timeStamp = 0;
         getCsv(gyroValueRecorded, 'gyro', controller.text.toUpperCase());
       }
     });

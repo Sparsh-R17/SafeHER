@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1054993111549",
+    "project_id": "kavach-be141",
+    "storage_bucket": "kavach-be141.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054993111549:android:425c199c616d08717be194",
+        "android_client_info": {
+          "package_name": "com.example.kavach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054993111549-uiceltb2qvdt82th0tpp2t10n3koqalh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwtO7K6fVdIuGaOpsao1Nlq63eqqY3phA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054993111549-uiceltb2qvdt82th0tpp2t10n3koqalh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
