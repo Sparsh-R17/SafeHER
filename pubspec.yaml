@@ -37,6 +37,7 @@ dependencies:
   flutter_sms: ^2.3.3
   path_provider: ^2.0.13
   permission_handler: ^10.2.0
+  provider: ^6.0.5
   sensors_plus: ^2.0.2
 
 dev_dependencies:

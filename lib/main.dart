@@ -3,17 +3,17 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:csv/csv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:kavach/providers/trigger.dart';
+import 'package:kavach/screens/trigger_screen.dart';
+import 'package:kavach/utils/app_dimension.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 import 'firebase_options.dart';
-
-import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-// import 'package:external_path/external_path.dart';
-// import 'package:permission_handler/permission_handler.dart';
-
-import 'package:sensors_plus/sensors_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,9 +28,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Kavach',
-      home: ValueScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Trigger>(
+          create: (context) => Trigger(),
+        ),
+      ],
+      child: Consumer<Trigger>(
+        builder: (context, tapTrigger, _) {
+          return MaterialApp(
+            title: 'Kavach',
+            home: tapTrigger.pageTrigger
+                ? const TriggerScreen()
+                : const ValueScreen(),
+          );
+        },
+      ),
     );
   }
 }
@@ -166,6 +179,7 @@ class _ValueScreenState extends State<ValueScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _trigger = Provider.of<Trigger>(context);
     return Scaffold(
       body: Center(
         child: _start
@@ -201,6 +215,11 @@ class _ValueScreenState extends State<ValueScreen> {
                   Text(displayGyroUser[0].toStringAsFixed(4)),
                   Text(displayGyroUser[1].toStringAsFixed(4)),
                   Text(displayGyroUser[2].toStringAsFixed(4)),
+                  verticalSpacing(10),
+                  FilledButton(
+                    onPressed: _trigger.alertTrigger,
+                    child: const Text('Trigger'),
+                  ),
                 ],
               )
             : Column(
@@ -224,6 +243,11 @@ class _ValueScreenState extends State<ValueScreen> {
                         labelText: 'Enter Activity',
                       ),
                     ),
+                  ),
+                  verticalSpacing(10),
+                  FilledButton(
+                    onPressed: _trigger.alertTrigger,
+                    child: const Text('Trigger'),
                   ),
                 ],
               ),
