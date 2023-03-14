@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1054993111549',
     projectId: 'kavach-be141',
     storageBucket: 'kavach-be141.appspot.com',
-    iosClientId: '1054993111549-k46cqnbo18v1ta57h16818uo1tevnl72.apps.googleusercontent.com',
+    iosClientId:
+        '1054993111549-k46cqnbo18v1ta57h16818uo1tevnl72.apps.googleusercontent.com',
     iosBundleId: 'com.example.kavach',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1054993111549',
     projectId: 'kavach-be141',
     storageBucket: 'kavach-be141.appspot.com',
-    iosClientId: '1054993111549-k46cqnbo18v1ta57h16818uo1tevnl72.apps.googleusercontent.com',
+    iosClientId:
+        '1054993111549-k46cqnbo18v1ta57h16818uo1tevnl72.apps.googleusercontent.com',
     iosBundleId: 'com.example.kavach',
   );
 }

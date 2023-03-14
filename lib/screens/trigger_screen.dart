@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +9,7 @@ import '../providers/trigger.dart';
 
 class TriggerScreen extends StatelessWidget {
   const TriggerScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
