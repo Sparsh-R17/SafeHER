@@ -3,12 +3,15 @@
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-        
-   <application
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>   
+    <application
         android:name="${applicationName}"
         android:label="kavach"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDz6V5mMH6pdHo_tO-DmqmUE1Xq6FIQBwE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

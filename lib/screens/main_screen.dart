@@ -11,34 +11,41 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
+  
 
   @override
   Widget build(BuildContext context) {
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
             Row(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: pageHeight * 0.015,
-                    left: pageWidth * 0.03,
-                  ),
-                  child: CircleAvatar(
-                    minRadius: pageWidth * 0.08,
-                    maxRadius: pageWidth * 0.11,
-                    backgroundColor: Color.alphaBlend(
-                      Theme.of(context).colorScheme.primary.withOpacity(0.08),
-                      Theme.of(context).colorScheme.surface,
+                GestureDetector(
+                  onTap: () {
+                    print('avatar selected');
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: pageHeight * 0.015,
+                      left: pageWidth * 0.03,
                     ),
                     child: CircleAvatar(
-                      minRadius: pageWidth * 0.06,
-                      maxRadius: pageWidth * 0.09,
-                      foregroundImage:
-                          const AssetImage('assets/png/avatar_1.png'),
+                      minRadius: pageWidth * 0.08,
+                      maxRadius: pageWidth * 0.11,
+                      backgroundColor: Color.alphaBlend(
+                        Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                        Theme.of(context).colorScheme.surface,
+                      ),
+                      child: CircleAvatar(
+                        minRadius: pageWidth * 0.06,
+                        maxRadius: pageWidth * 0.09,
+                        foregroundImage:
+                            const AssetImage('assets/png/avatar_1.png'),
+                      ),
                     ),
                   ),
                 ),
@@ -49,10 +56,10 @@ class _MainScreenState extends State<MainScreen> {
                     verticalSpacing(pageHeight * 0.015),
                     Text(
                       'Hello',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'Ayushri Bhuyan',
@@ -64,7 +71,9 @@ class _MainScreenState extends State<MainScreen> {
             ),
             verticalSpacing(pageHeight * 0.05),
             const Expanded(
-              child: CurrentMap(),
+              child: CurrentMap(
+
+              ),
             ),
           ],
         ),

@@ -4,7 +4,6 @@
 // import 'dart:io';
 
 // import 'package:csv/csv.dart';
-// import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/material.dart';
 // import 'package:kavach/providers/trigger.dart';
 // import 'package:kavach/screens/trigger_screen.dart';
@@ -13,14 +12,8 @@
 // import 'package:provider/provider.dart';
 // import 'package:sensors_plus/sensors_plus.dart';
 
-// import 'screens/firebase_options.dart';
-
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-
 //   runApp(const MyApp());
 // }
 
@@ -100,7 +93,7 @@
 //     List<List<dynamic>> rows = [];
 
 //     for (var data in finalValues) {
-//       timeStamp += 0.200;
+//       timeStamp += 0.050;
 //       print(timeStamp);
 //       rows.add([timeStamp, data[0], data[1], data[2], activity]);
 //     }
@@ -148,7 +141,7 @@
 //       });
 //     });
 
-//     Timer.periodic(const Duration(milliseconds: 200), (timer) {
+//     Timer.periodic(const Duration(milliseconds: 50), (timer) {
 //       setState(() {
 //         displayAcclUser = acclUser;
 //         displayGyroUser = gyroUser;
@@ -156,7 +149,7 @@
 //       acclValueRecorded.add(displayAcclUser);
 //       gyroValueRecorded.add(displayGyroUser);
 
-//       if (timer.tick % 5 == 0 && timer.tick != 0) {
+//       if (timer.tick % 20 == 0 && timer.tick != 0) {
 //         setState(() {
 //           timerValue--;
 //         });
@@ -197,9 +190,9 @@
 //                   const SizedBox(
 //                     height: 10,
 //                   ),
-//                   Text(displayAcclUser[0].toStringAsFixed(4)),
-//                   Text(displayAcclUser[1].toStringAsFixed(4)),
-//                   Text(displayAcclUser[2].toStringAsFixed(4)),
+//                   Text('x : ${displayAcclUser[0].toStringAsFixed(4)}'),
+//                   Text('y : ${displayAcclUser[1].toStringAsFixed(4)}'),
+//                   Text('z : ${displayAcclUser[2].toStringAsFixed(4)}'),
 //                   const SizedBox(
 //                     height: 30,
 //                   ),
@@ -213,9 +206,9 @@
 //                   const SizedBox(
 //                     height: 10,
 //                   ),
-//                   Text(displayGyroUser[0].toStringAsFixed(4)),
-//                   Text(displayGyroUser[1].toStringAsFixed(4)),
-//                   Text(displayGyroUser[2].toStringAsFixed(4)),
+//                   Text('x : ${displayGyroUser[0].toStringAsFixed(4)}'),
+//                   Text('y : ${displayGyroUser[1].toStringAsFixed(4)}'),
+//                   Text('z : ${displayGyroUser[2].toStringAsFixed(4)}'),
 //                   verticalSpacing(10),
 //                   FilledButton(
 //                     onPressed: _trigger.alertTrigger,
