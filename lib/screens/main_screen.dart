@@ -1,4 +1,9 @@
+import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/screens/call_screen.dart';
+import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import '../utils/app_dimension.dart';
 import '../widgets/current_map.dart';
 
@@ -11,7 +16,36 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
-  
+  List<String> trySOS = [
+    '09747016882',
+    '08178600672',
+    '07842318091',
+    '09854043770',
+    '06203582590',
+    '07054571877'
+  ];
+
+  void _sendSOS() async {
+    bool isPermission = await Permission.sms.isGranted;
+    if (isPermission == false) {
+      Permission.sms.request();
+    }
+    if (isPermission == true) {
+      final locData = await Location().getLocation();
+      for (var i = 0; i < trySOS.length; i++) {
+        final result = await BackgroundSms.sendMessage(
+          phoneNumber: trySOS[i],
+          message:
+              "Trial SOS.\nLocation : ${locData.latitude}, ${locData.longitude}",
+        );
+        if (result == SmsStatus.sent) {
+          print("Sent");
+        } else {
+          print("Failed");
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,65 +53,63 @@ class _MainScreenState extends State<MainScreen> {
     final pageWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    print('avatar selected');
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: pageHeight * 0.015,
-                      left: pageWidth * 0.03,
-                    ),
-                    child: CircleAvatar(
-                      minRadius: pageWidth * 0.08,
-                      maxRadius: pageWidth * 0.11,
-                      backgroundColor: Color.alphaBlend(
-                        Theme.of(context).colorScheme.primary.withOpacity(0.08),
-                        Theme.of(context).colorScheme.surface,
+      body: pageIndex == 1
+          ? const CallScreen()
+          : SafeArea(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: pageHeight * 0.015,
+                          left: pageWidth * 0.03,
+                        ),
+                        child: CircleAvatar(
+                          minRadius: pageWidth * 0.08,
+                          maxRadius: pageWidth * 0.11,
+                          backgroundColor: Color.alphaBlend(
+                            Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.08),
+                            Theme.of(context).colorScheme.surface,
+                          ),
+                          child: CircleAvatar(
+                            minRadius: pageWidth * 0.06,
+                            maxRadius: pageWidth * 0.09,
+                            foregroundImage:
+                                const AssetImage('assets/png/avatar_1.png'),
+                          ),
+                        ),
                       ),
-                      child: CircleAvatar(
-                        minRadius: pageWidth * 0.06,
-                        maxRadius: pageWidth * 0.09,
-                        foregroundImage:
-                            const AssetImage('assets/png/avatar_1.png'),
+                      horizontalSpacing(pageWidth * 0.03),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          verticalSpacing(pageHeight * 0.015),
+                          Text(
+                            'Hello',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'Ayushri Bhuyan',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
                       ),
-                    ),
+                    ],
                   ),
-                ),
-                horizontalSpacing(pageWidth * 0.03),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpacing(pageHeight * 0.015),
-                    Text(
-                      'Hello',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Ayushri Bhuyan',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            verticalSpacing(pageHeight * 0.05),
-            const Expanded(
-              child: CurrentMap(
-
+                  verticalSpacing(pageHeight * 0.05),
+                  const Expanded(
+                    child: CurrentMap(),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
       floatingActionButton: Container(
         margin: EdgeInsets.only(
           bottom: pageHeight * 0.01,
@@ -86,6 +118,7 @@ class _MainScreenState extends State<MainScreen> {
         height: pageHeight * 0.08,
         child: FloatingActionButton.extended(
           backgroundColor: Theme.of(context).colorScheme.errorContainer,
+          // onPressed: _sendSOS,
           onPressed: () {},
           icon: Icon(
             Icons.crisis_alert,
@@ -103,6 +136,31 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
+          if (index == 2) {
+            showModalBottomSheet(
+              isDismissible: false,
+              context: context,
+              builder: (context) {
+                return SizedBox(
+                  height: pageHeight * 0.4,
+                  width: pageWidth,
+                  child: Card(
+                    child: GestureDetector(
+                      child: Center(
+                        child: Text('Hello'),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          pageIndex = 0;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          }
           setState(() {
             pageIndex = index;
           });
@@ -110,26 +168,30 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: pageIndex,
         destinations: const [
           NavigationDestination(
+            selectedIcon: Icon(Icons.home),
             icon: Icon(
               Icons.home_outlined,
             ),
             label: 'Home',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.phone_callback),
             icon: Icon(
-              Icons.phone_callback,
+              Icons.phone_callback_outlined,
             ),
             label: 'Fake Call',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.share_location),
             icon: Icon(
-              Icons.share_location,
+              Icons.share_location_outlined,
             ),
             label: 'Location',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.support_agent),
             icon: Icon(
-              Icons.support_agent,
+              Icons.support_agent_outlined,
             ),
             label: 'Help Desk',
           ),

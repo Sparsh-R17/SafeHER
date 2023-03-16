@@ -14,7 +14,7 @@ class CurrentMap extends StatefulWidget {
 }
 
 class _CurrentMapState extends State<CurrentMap> {
-  final List<int> _chipIndex = [];
+  int _chipIndex = -1;
   LocationData? currentLocation;
   String? imgUrl;
 
@@ -25,10 +25,30 @@ class _CurrentMapState extends State<CurrentMap> {
     );
   }
 
+  List<dynamic> safePlaces = [
+    {
+      'icon': Icons.local_police,
+      'title': 'Police',
+    },
+    {
+      'icon': Icons.local_hospital,
+      'title': 'Hospital',
+    },
+    {
+      'icon': Icons.local_mall,
+      'title': 'Mall',
+    },
+    {
+      'icon': Icons.school,
+      'title': 'School',
+    },
+  ];
+
   Future<void> get _getCurrentLocation async {
     try {
       final locData = await Location().getLocation();
-      _generateMap(locData.latitude!, locData.longitude!);
+      currentLocation = locData;
+      // _generateMap(locData.latitude!, locData.longitude!);
     } catch (e) {
       print(e);
     }
@@ -73,11 +93,12 @@ class _CurrentMapState extends State<CurrentMap> {
                   );
                 } else {
                   return GestureDetector(
-                    onTap: _selectMap,
+                    // onTap: _selectMap,
+                    onTap: null,
                     child: Card(
                       child: imgUrl == null
                           ? const Center(
-                              child: Text('Error Occurred'),
+                              child: Text('Some Error Occurred'),
                             )
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(12),
@@ -96,32 +117,41 @@ class _CurrentMapState extends State<CurrentMap> {
           height: pageHeight * 0.1,
           width: pageWidth * 0.9,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: safePlaces.length,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: pageWidth * 0.015,
+                  horizontal: pageWidth * 0.018,
                 ),
                 child: ActionChip(
-                  avatar: const Icon(
-                    Icons.car_crash,
-                  ),
+                  avatar: Icon(safePlaces[index]['icon']),
                   onPressed: () {
-                    setState(() {
-                      if (_chipIndex.contains(index)) {
-                        _chipIndex.remove(index);
-                      } else {
-                        _chipIndex.add(index);
-                      }
-                    });
+                    if (_chipIndex == index) {
+                      setState(() {
+                        _chipIndex = -1;
+                      });
+                    } else {
+                      setState(() {
+                        LocationHelper.getPlaces(
+                            currentLocation!,
+                            (safePlaces[index]['title'])
+                                .toString()
+                                .toLowerCase());
+                        _chipIndex = index;
+                      });
+                    }
                   },
-                  side: _chipIndex.contains(index) ? BorderSide.none : null,
-                  backgroundColor: _chipIndex.contains(index)
+                  side: _chipIndex == index
+                      ? const BorderSide(
+                          color: Colors.transparent,
+                        )
+                      : null,
+                  backgroundColor: _chipIndex == index
                       ? Theme.of(context).colorScheme.secondaryContainer
                       : null,
-                  label: const Text('Police'),
+                  label: Text(safePlaces[index]['title']),
                 ),
               );
             },
