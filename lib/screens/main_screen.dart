@@ -1,9 +1,12 @@
 import 'package:background_sms/background_sms.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/screens/call_screen.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/trigger.dart';
 import '../utils/app_dimension.dart';
 import '../widgets/current_map.dart';
 
@@ -22,10 +25,10 @@ class _MainScreenState extends State<MainScreen> {
     '07842318091',
     '09854043770',
     '06203582590',
-    '07054571877'
+    '07054571877',
   ];
 
-  void _sendSOS() async {
+  void _sendSOS(bool isCancel) async {
     bool isPermission = await Permission.sms.isGranted;
     if (isPermission == false) {
       Permission.sms.request();
@@ -35,8 +38,9 @@ class _MainScreenState extends State<MainScreen> {
       for (var i = 0; i < trySOS.length; i++) {
         final result = await BackgroundSms.sendMessage(
           phoneNumber: trySOS[i],
-          message:
-              "Trial SOS.\nLocation : ${locData.latitude}, ${locData.longitude}",
+          message: isCancel
+              ? 'Sorry Galti se aaya '
+              : "Trial SOS.\nLocation : ${locData.latitude}, ${locData.longitude}",
         );
         if (result == SmsStatus.sent) {
           print("Sent");
@@ -45,6 +49,24 @@ class _MainScreenState extends State<MainScreen> {
         }
       }
     }
+  }
+
+  void _showOverlay() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text('Hello'),
+          title: Text('SWIFT'),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.close),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -116,22 +138,29 @@ class _MainScreenState extends State<MainScreen> {
         ),
         width: pageWidth * 0.35,
         height: pageHeight * 0.08,
-        child: FloatingActionButton.extended(
-          backgroundColor: Theme.of(context).colorScheme.errorContainer,
-          // onPressed: _sendSOS,
-          onPressed: () {},
-          icon: Icon(
-            Icons.crisis_alert,
-            size: pageHeight * 0.04,
-          ),
-          label: Text(
-            'SOS',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(fontWeight: FontWeight.w500),
-          ),
-        ),
+        child: Consumer<Trigger>(builder: (_, obj, __) {
+          return FloatingActionButton.extended(
+            backgroundColor: Theme.of(context).colorScheme.errorContainer,
+            onPressed: () async {
+              _sendSOS(false);
+              final cancel = await obj.alertTrigger(context);
+              if (cancel == true) {
+                _sendSOS(true);
+              }
+            },
+            icon: Icon(
+              Icons.crisis_alert,
+              size: pageHeight * 0.04,
+            ),
+            label: Text(
+              'SOS',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+          );
+        }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: NavigationBar(

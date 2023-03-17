@@ -12,7 +12,7 @@ class TriggerScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: _trigger.alertTrigger,
+          onPressed: null,
           child: const Text('Exit'),
         ),
       ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
+import 'providers/trigger.dart';
 import 'screens/main_screen.dart';
 
 void main() async {
@@ -28,14 +30,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kavach',
-      themeMode: ThemeMode.system,
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Trigger>(
+          create: (context) => Trigger(),
+        ),
+      ],
+      child: Consumer<Trigger>(
+        builder: (context, value, child) {
+          final toShowDialong = value.pageTrigger;
+
+          return MaterialApp(
+            title: 'Kavach',
+            themeMode: ThemeMode.system,
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.dark,
+            ),
+            home: const MainScreen(),
+          );
+        },
       ),
-      home: const MainScreen(),
     );
   }
 }

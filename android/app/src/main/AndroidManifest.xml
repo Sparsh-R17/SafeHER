@@ -3,17 +3,20 @@
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>   
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE " />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:name="${applicationName}"
         android:label="kavach"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
+        <service android:name="flutter.overlay.window.flutter_overlay_window.OverlayService" android:exported="false" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDz6V5mMH6pdHo_tO-DmqmUE1Xq6FIQBwE"/>
+            android:value="AIzaSyDz6V5mMH6pdHo_tO-DmqmUE1Xq6FIQBwE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
