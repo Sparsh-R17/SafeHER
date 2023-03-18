@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Trigger>(
         builder: (context, value, child) {
-          final toShowDialong = value.pageTrigger;
+          // final toShowDialong = value.pageTrigger;
 
           return MaterialApp(
             title: 'Kavach',

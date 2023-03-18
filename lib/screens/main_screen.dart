@@ -1,14 +1,13 @@
-import 'package:background_sms/background_sms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/screens/call_screen.dart';
-import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/trigger.dart';
+import '../screens/trigger_screen.dart';
 import '../utils/app_dimension.dart';
 import '../widgets/current_map.dart';
+import '../utils/sos_fn.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,37 +18,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
-  List<String> trySOS = [
-    '09747016882',
-    '08178600672',
-    '07842318091',
-    '09854043770',
-    '06203582590',
-    '07054571877',
-  ];
-
-  void _sendSOS(bool isCancel) async {
-    bool isPermission = await Permission.sms.isGranted;
-    if (isPermission == false) {
-      Permission.sms.request();
-    }
-    if (isPermission == true) {
-      final locData = await Location().getLocation();
-      for (var i = 0; i < trySOS.length; i++) {
-        final result = await BackgroundSms.sendMessage(
-          phoneNumber: trySOS[i],
-          message: isCancel
-              ? 'Sorry Galti se aaya '
-              : "Trial SOS.\nLocation : ${locData.latitude}, ${locData.longitude}",
-        );
-        if (result == SmsStatus.sent) {
-          print("Sent");
-        } else {
-          print("Failed");
-        }
-      }
-    }
-  }
 
   void _showOverlay() {
     showCupertinoDialog(
@@ -71,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _trigger = Provider.of<Trigger>(context);
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -80,49 +49,67 @@ class _MainScreenState extends State<MainScreen> {
           : SafeArea(
               child: Column(
                 children: [
-                  Row(
+                  Stack(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: pageHeight * 0.015,
-                          left: pageWidth * 0.03,
-                        ),
-                        child: CircleAvatar(
-                          minRadius: pageWidth * 0.08,
-                          maxRadius: pageWidth * 0.11,
-                          backgroundColor: Color.alphaBlend(
-                            Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.08),
-                            Theme.of(context).colorScheme.surface,
-                          ),
-                          child: CircleAvatar(
-                            minRadius: pageWidth * 0.06,
-                            maxRadius: pageWidth * 0.09,
-                            foregroundImage:
-                                const AssetImage('assets/png/avatar_1.png'),
-                          ),
-                        ),
-                      ),
-                      horizontalSpacing(pageWidth * 0.03),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          verticalSpacing(pageHeight * 0.015),
-                          Text(
-                            'Hello',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: pageHeight * 0.015,
+                              left: pageWidth * 0.03,
+                            ),
+                            child: CircleAvatar(
+                              minRadius: pageWidth * 0.08,
+                              maxRadius: pageWidth * 0.11,
+                              backgroundColor: Color.alphaBlend(
+                                Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.08),
+                                Theme.of(context).colorScheme.surface,
+                              ),
+                              child: CircleAvatar(
+                                minRadius: pageWidth * 0.06,
+                                maxRadius: pageWidth * 0.09,
+                                foregroundImage:
+                                    const AssetImage('assets/png/avatar_1.png'),
+                              ),
+                            ),
                           ),
-                          Text(
-                            'Ayushri Bhuyan',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                          horizontalSpacing(pageWidth * 0.03),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              verticalSpacing(pageHeight * 0.015),
+                              Text(
+                                'Hello',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Ayushri Bhuyan',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                      _trigger.bannerTrigger
+                          ? MaterialBanner(content: Text("Hello"), actions: [
+                              IconButton(
+                                  onPressed: () {
+                                    _trigger.closeBanner();
+                                    sendSOS(true);
+                                    print("Banner Cancel!");
+                                  },
+                                  icon: Icon(Icons.close)),
+                            ])
+                          : Container(
+                              color: Colors.transparent,
+                            ),
                     ],
                   ),
                   verticalSpacing(pageHeight * 0.05),
@@ -141,12 +128,16 @@ class _MainScreenState extends State<MainScreen> {
         child: Consumer<Trigger>(builder: (_, obj, __) {
           return FloatingActionButton.extended(
             backgroundColor: Theme.of(context).colorScheme.errorContainer,
-            onPressed: () async {
-              _sendSOS(false);
-              final cancel = await obj.alertTrigger(context);
-              if (cancel == true) {
-                _sendSOS(true);
-              }
+            onPressed: () {
+              sendSOS(false);
+              obj.alertTrigger();
+              print("SOS Sent!!");
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => const TriggerScreen()),
+              );
+              // final cancel = await obj.alertTrigger(context);
             },
             icon: Icon(
               Icons.crisis_alert,
