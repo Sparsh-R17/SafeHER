@@ -30,7 +30,6 @@ class _TriggerScreenState extends State<TriggerScreen> {
               MaterialPageRoute(
                 builder: (context) => const MainScreen(),
               ));
-          print("Timer timed out!");
           timer!.cancel();
         } else {
           _val = _val - 1;
@@ -115,7 +114,6 @@ class _TriggerScreenState extends State<TriggerScreen> {
                         trigger.alertTrigger();
                         timer!.cancel();
                         sendSOS(true);
-                        print("Dismissible Cancel");
                         setState(() => showDismiss = !showDismiss);
                         Navigator.pushReplacement(
                             context,

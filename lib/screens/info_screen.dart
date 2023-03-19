@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CallScreen extends StatelessWidget {
-  const CallScreen({super.key});
+class InfoScreen extends StatelessWidget {
+  const InfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CallScreen extends StatelessWidget {
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
               centerTitle: true,
-              title: Text('Call Screen'),
+              title: Text('Info Screen'),
             ),
           ),
           SliverList(

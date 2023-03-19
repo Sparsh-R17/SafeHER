@@ -5,7 +5,6 @@ class Trigger with ChangeNotifier {
   bool bannerTrigger = false;
 
   void alertTrigger() {
-    // bool cancelMsg = false;
     pageTrigger = !pageTrigger;
     bannerTrigger = !bannerTrigger;
     // if (pageTrigger) {
@@ -31,7 +30,6 @@ class Trigger with ChangeNotifier {
     // } else {
     //   cancelMsg = false;
     // }
-    print(bannerTrigger);
     notifyListeners();
   }
 

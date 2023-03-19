@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kavach/providers/internet_connectivity.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Trigger>(
           create: (context) => Trigger(),
         ),
+        ChangeNotifierProvider<InternetConnection>(
+          create: (context) => InternetConnection(),
+        )
       ],
       child: Consumer<Trigger>(
         builder: (context, value, child) {
