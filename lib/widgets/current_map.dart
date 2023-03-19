@@ -17,12 +17,10 @@ class _CurrentMapState extends State<CurrentMap> {
   int _chipIndex = -1;
   LocationData? currentLocation;
   String? imgUrl;
-
-  void _generateMap(double lat, double lng) {
+  String marker = '';
+  void _generateMap(double lat, double lng, String nearPlace) {
     imgUrl = LocationHelper.generateLocationImage(
-      latitude: lat,
-      longitude: lng,
-    );
+        latitude: lat, longitude: lng, safePlaceUrl: nearPlace);
   }
 
   List<dynamic> safePlaces = [
@@ -44,11 +42,12 @@ class _CurrentMapState extends State<CurrentMap> {
     },
   ];
 
-  Future<void> get _getCurrentLocation async {
+  Future<void> _getCurrentLocation(String nearPlaces) async {
     try {
       final locData = await Location().getLocation();
       currentLocation = locData;
-      // _generateMap(locData.latitude!, locData.longitude!);
+      print(nearPlaces);
+      _generateMap(locData.latitude!, locData.longitude!, nearPlaces);
     } catch (e) {
       print(e);
     }
@@ -69,9 +68,9 @@ class _CurrentMapState extends State<CurrentMap> {
       return;
     }
     //TODO need to change marker according to the place chosen
-    setState(() {
-      _generateMap(selectedLocation.latitude, selectedLocation.longitude);
-    });
+    // setState(() {
+    //   _generateMap(selectedLocation.latitude, selectedLocation.longitude);
+    // });
   }
 
   @override
@@ -85,7 +84,7 @@ class _CurrentMapState extends State<CurrentMap> {
           height: pageHeight * 0.45,
           width: pageWidth * 0.9,
           child: FutureBuilder(
-              future: _getCurrentLocation,
+              future: _getCurrentLocation(marker),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -127,19 +126,24 @@ class _CurrentMapState extends State<CurrentMap> {
                 ),
                 child: ActionChip(
                   avatar: Icon(safePlaces[index]['icon']),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_chipIndex == index) {
                       setState(() {
                         _chipIndex = -1;
+                        marker = '';
+                        // _getCurrentLocation('');
                       });
                     } else {
+                      marker = await LocationHelper.getPlaces(
+                          currentLocation!,
+                          (safePlaces[index]['title'])
+                              .toString()
+                              .toLowerCase());
+
                       setState(() {
-                        LocationHelper.getPlaces(
-                            currentLocation!,
-                            (safePlaces[index]['title'])
-                                .toString()
-                                .toLowerCase());
+                        print(marker);
                         _chipIndex = index;
+                        _getCurrentLocation(marker);
                       });
                     }
                   },
