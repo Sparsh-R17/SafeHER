@@ -36,6 +36,7 @@ dependencies:
   firebase_core: ^2.7.1
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^13.0.0
   flutter_svg: ^2.0.4
   google_maps_flutter: ^2.2.5
   http: ^0.13.5

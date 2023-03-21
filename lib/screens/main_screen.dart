@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kavach/screens/call_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
+  FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
   List pages = const [
     HomeScreen(),
@@ -31,12 +33,50 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     getConnection();
+    getNotificationPermission();
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    flutterLocalNotificationsPlugin!.initialize(initializationSettings);
+  }
+
+  Future _showNotification() async {
+    var androidPlatformChannel = AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      channelDescription: 'channelDescription',
+      playSound: false,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannel,
+    );
+    await flutterLocalNotificationsPlugin!.show(
+      0,
+      'New Post',
+      'Help Needed !!!',
+      platformChannelSpecifics,
+    );
   }
 
   void getConnection() async {
     Provider.of<InternetConnection>(context, listen: false).checkConnection();
     Provider.of<InternetConnection>(context, listen: false)
         .checkRealTimeConnection();
+  }
+
+  void getNotificationPermission() {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestPermission();
   }
 
   @override
@@ -64,6 +104,7 @@ class _MainScreenState extends State<MainScreen> {
                                 Theme.of(context).colorScheme.errorContainer,
                             onPressed: () {
                               sendSOS(false);
+                              _showNotification();
                               obj.alertTrigger();
                               Navigator.pushReplacement(
                                 context,

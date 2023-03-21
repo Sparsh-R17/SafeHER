@@ -11,6 +11,7 @@ class LocationScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            surfaceTintColor: Colors.transparent,
             expandedHeight: pageHeight * 0.12,
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
