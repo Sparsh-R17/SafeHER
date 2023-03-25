@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,13 @@ class HomeScreen extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
     final connection = Provider.of<InternetConnection>(context);
     final trigger = Provider.of<Trigger>(context);
+
+    if (trigger.bannerTrigger == true) {
+      Timer(const Duration(seconds: 20), () {
+        print('Timer Finished');
+        trigger.closeBanner();
+      });
+    }
     return SafeArea(
       child: Column(
         children: [
@@ -65,15 +74,17 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               trigger.bannerTrigger
-                  ? MaterialBanner(content: const Text("Hello"), actions: [
-                      IconButton(
-                          onPressed: () {
-                            trigger.closeBanner();
-                            sendSOS(true);
-                            print("Banner Cancel!");
-                          },
-                          icon: const Icon(Icons.close)),
-                    ])
+                  ? MaterialBanner(
+                      content: const Text("Want to cancel SOS ?"),
+                      actions: [
+                          IconButton(
+                              onPressed: () {
+                                trigger.closeBanner();
+                                sendSOS(true);
+                                print("Banner Cancel!");
+                              },
+                              icon: const Icon(Icons.close)),
+                        ])
                   : Container(
                       color: Colors.transparent,
                     ),

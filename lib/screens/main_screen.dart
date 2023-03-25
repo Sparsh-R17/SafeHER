@@ -132,20 +132,18 @@ class _MainScreenState extends State<MainScreen> {
                                     .colorScheme
                                     .errorContainer,
                                 onPressed: () {
+                                  sendSOS(false);
+                                  obj.alertTrigger();
                                   callTriggerForUser(true);
+                                  _showNotification();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const TriggerScreen(),
+                                    ),
+                                  );
                                 },
-                                // onPressed: () {
-                                //   sendSOS(false);
-                                //   _showNotification();
-                                //   obj.alertTrigger();
-                                //   Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (BuildContext context) =>
-                                //           const TriggerScreen(),
-                                //     ),
-                                //   );
-                                // },
                                 icon: Icon(
                                   Icons.crisis_alert,
                                   size: pageHeight * 0.04,

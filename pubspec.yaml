@@ -32,6 +32,7 @@ dependencies:
   connectivity_plus: ^3.0.3
   csv: ^5.0.1
   cupertino_icons: ^1.0.2
+  dynamic_color: ^1.6.2
   external_path: ^1.0.3
   firebase_core: ^2.7.1
   firebase_database: ^10.0.16

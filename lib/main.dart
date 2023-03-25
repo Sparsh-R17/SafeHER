@@ -9,6 +9,7 @@ import 'firebase_options.dart';
 
 import 'providers/trigger.dart';
 import 'screens/main_screen.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Kavach',
             themeMode: ThemeMode.system,
-            darkTheme: ThemeData(
+            theme: ThemeData(
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
