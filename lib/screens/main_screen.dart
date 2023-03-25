@@ -1,5 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:kavach/main.dart';
 import 'package:kavach/screens/call_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +24,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
   FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+  final _firebaseRef = FirebaseDatabase(
+          databaseURL:
+              'https://kavach-be141-default-rtdb.asia-southeast1.firebasedatabase.app')
+      .ref()
+      .child('triggers');
 
   List pages = const [
     HomeScreen(),
@@ -28,6 +36,12 @@ class _MainScreenState extends State<MainScreen> {
     LocationScreen(),
     InfoScreen(),
   ];
+
+  callTriggerForUser(value) {
+    _firebaseRef.update(
+      {'userId': value},
+    );
+  }
 
   @override
   void initState() {
@@ -86,92 +100,111 @@ class _MainScreenState extends State<MainScreen> {
     final connection = Provider.of<InternetConnection>(context);
 
     return connection.status != ConnectivityMode.waiting
-        ? Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: pages[pageIndex],
-            floatingActionButton: connection.status == ConnectivityMode.offline
-                ? null
-                : pageIndex == 0
-                    ? Container(
-                        margin: EdgeInsets.only(
-                          bottom: pageHeight * 0.01,
-                        ),
-                        width: pageWidth * 0.35,
-                        height: pageHeight * 0.08,
-                        child: Consumer<Trigger>(builder: (_, obj, __) {
-                          return FloatingActionButton.extended(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.errorContainer,
-                            onPressed: () {
-                              sendSOS(false);
-                              _showNotification();
-                              obj.alertTrigger();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const TriggerScreen(),
+        ? StreamBuilder(
+            stream: _firebaseRef.onValue,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              var triggerValue = snapshot.data!.snapshot.value as Map;
+              if (triggerValue['userId'] == true) {
+                _showNotification();
+                callTriggerForUser(false);
+              }
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: pages[pageIndex],
+                floatingActionButton: connection.status ==
+                        ConnectivityMode.offline
+                    ? null
+                    : pageIndex == 0
+                        ? Container(
+                            margin: EdgeInsets.only(
+                              bottom: pageHeight * 0.01,
+                            ),
+                            width: pageWidth * 0.35,
+                            height: pageHeight * 0.08,
+                            child: Consumer<Trigger>(builder: (_, obj, __) {
+                              return FloatingActionButton.extended(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .errorContainer,
+                                onPressed: () {
+                                  callTriggerForUser(true);
+                                },
+                                // onPressed: () {
+                                //   sendSOS(false);
+                                //   _showNotification();
+                                //   obj.alertTrigger();
+                                //   Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (BuildContext context) =>
+                                //           const TriggerScreen(),
+                                //     ),
+                                //   );
+                                // },
+                                icon: Icon(
+                                  Icons.crisis_alert,
+                                  size: pageHeight * 0.04,
+                                ),
+                                label: Text(
+                                  'SOS',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(fontWeight: FontWeight.bold),
                                 ),
                               );
-                            },
-                            icon: Icon(
-                              Icons.crisis_alert,
-                              size: pageHeight * 0.04,
-                            ),
-                            label: Text(
-                              'SOS',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            ),
-                          );
-                        }),
-                      )
-                    : null,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            bottomNavigationBar: NavigationBar(
-              onDestinationSelected: (int index) {
-                setState(() {
-                  pageIndex = index;
-                });
-              },
-              selectedIndex: pageIndex,
-              destinations: [
-                const NavigationDestination(
-                  selectedIcon: Icon(Icons.home),
-                  icon: Icon(
-                    Icons.home_outlined,
-                  ),
-                  label: 'Home',
-                ),
-                if (connection.status != ConnectivityMode.offline)
-                  const NavigationDestination(
-                    selectedIcon: Icon(Icons.phone_callback),
-                    icon: Icon(
-                      Icons.phone_callback_outlined,
+                            }),
+                          )
+                        : null,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                bottomNavigationBar: NavigationBar(
+                  onDestinationSelected: (int index) {
+                    setState(() {
+                      pageIndex = index;
+                    });
+                  },
+                  selectedIndex: pageIndex,
+                  destinations: [
+                    const NavigationDestination(
+                      selectedIcon: Icon(Icons.home),
+                      icon: Icon(
+                        Icons.home_outlined,
+                      ),
+                      label: 'Home',
                     ),
-                    label: 'Phone Calls',
-                  ),
-                if (connection.status != ConnectivityMode.offline)
-                  const NavigationDestination(
-                    selectedIcon: Icon(Icons.share_location),
-                    icon: Icon(
-                      Icons.share_location_outlined,
+                    if (connection.status != ConnectivityMode.offline)
+                      const NavigationDestination(
+                        selectedIcon: Icon(Icons.phone_callback),
+                        icon: Icon(
+                          Icons.phone_callback_outlined,
+                        ),
+                        label: 'Phone Calls',
+                      ),
+                    if (connection.status != ConnectivityMode.offline)
+                      const NavigationDestination(
+                        selectedIcon: Icon(Icons.share_location),
+                        icon: Icon(
+                          Icons.share_location_outlined,
+                        ),
+                        label: 'Location',
+                      ),
+                    const NavigationDestination(
+                      selectedIcon: Icon(Icons.book),
+                      icon: Icon(
+                        Icons.book_outlined,
+                      ),
+                      label: 'Your Info',
                     ),
-                    label: 'Location',
-                  ),
-                const NavigationDestination(
-                  selectedIcon: Icon(Icons.book),
-                  icon: Icon(
-                    Icons.book_outlined,
-                  ),
-                  label: 'Your Info',
+                  ],
                 ),
-              ],
-            ),
-          )
+              );
+            })
         : const Center(
             child: CircularProgressIndicator(),
           );

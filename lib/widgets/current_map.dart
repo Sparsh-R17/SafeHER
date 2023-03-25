@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:kavach/helper/location_helper.dart';
-import 'package:kavach/utils/app_dimension.dart';
+
+import '../helper/location_helper.dart';
+import '../utils/app_dimension.dart';
 import 'package:location/location.dart';
 
 import '../screens/maps_screen.dart';
@@ -135,10 +137,18 @@ class _CurrentMapState extends State<CurrentMap> {
                       });
                     } else {
                       marker = await LocationHelper.getPlaces(
-                          currentLocation!,
-                          (safePlaces[index]['title'])
-                              .toString()
-                              .toLowerCase());
+                              currentLocation!,
+                              (safePlaces[index]['title'])
+                                  .toString()
+                                  .toLowerCase())
+                          .catchError((error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'No ${safePlaces[index]['title']} found in 1.5km radius'),
+                          ),
+                        );
+                      });
 
                       setState(() {
                         print(marker);
