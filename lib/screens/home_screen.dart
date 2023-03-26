@@ -77,13 +77,23 @@ class HomeScreen extends StatelessWidget {
                   ? MaterialBanner(
                       content: const Text("Want to cancel SOS ?"),
                       actions: [
-                          IconButton(
-                              onPressed: () {
-                                trigger.closeBanner();
-                                sendSOS(true);
-                                print("Banner Cancel!");
-                              },
-                              icon: const Icon(Icons.close)),
+                          FilledButton(
+                            onPressed: () {
+                              trigger.closeBanner();
+                              sendSOS(true);
+                              print("Banner Cancel!");
+                            },
+                            child: const Icon(Icons.close),
+                            style: ButtonStyle(
+                                iconColor: MaterialStatePropertyAll(
+                                  Theme.of(context).colorScheme.errorContainer,
+                                ),
+                                backgroundColor: MaterialStatePropertyAll(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .onErrorContainer,
+                                )),
+                          ),
                         ])
                   : Container(
                       color: Colors.transparent,

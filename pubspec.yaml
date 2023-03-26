@@ -47,6 +47,7 @@ dependencies:
   permission_handler: ^10.2.0
   provider: ^6.0.5
   sensors_plus: ^2.0.2
+  shake_event: ^0.0.9
   system_alert_window: ^1.2.1
   uuid: ^3.0.7
 

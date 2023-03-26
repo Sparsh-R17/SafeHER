@@ -12,7 +12,7 @@ List<String> trySOS = [
 ];
 
 void sendSOS(bool isCancel) async {
-    print('sendSOS');
+  print('sendSOS');
   bool isPermission = await Permission.sms.isGranted;
   if (isPermission == false) {
     Permission.sms.request();
