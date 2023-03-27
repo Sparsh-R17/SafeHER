@@ -38,7 +38,6 @@ dependencies:
   firebase_database: ^10.0.16
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^13.0.0
   flutter_svg: ^2.0.4
   google_maps_flutter: ^2.2.5
   http: ^0.13.5
@@ -49,6 +48,7 @@ dependencies:
   sensors_plus: ^2.0.2
   shake_event: ^0.0.9
   system_alert_window: ^1.2.1
+  tflite_flutter: ^0.9.0
   uuid: ^3.0.7
 
 dev_dependencies:
@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/png/
+    - assets/models/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
