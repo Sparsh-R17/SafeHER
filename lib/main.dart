@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:kavach/providers/internet_connectivity.dart';
+import '/providers/internet_connectivity.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
 import 'providers/trigger.dart';
 import 'screens/main_screen.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
