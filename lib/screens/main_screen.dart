@@ -15,9 +15,9 @@ import '../utils/db_trigger.dart';
 import '../utils/motion_model.dart';
 import '../utils/sos_fn.dart';
 import '../widgets/location_share.dart';
+import 'call_screen.dart';
 import 'home_screen.dart';
 import 'info_screen.dart';
-import 'location_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,8 +34,8 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
 
   List pages = const [
     HomeScreen(),
+    CallScreen(),
     HomeScreen(),
-    LocationScreen(),
     InfoScreen(),
   ];
 
@@ -200,7 +200,7 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
-          if (index == 1) {
+          if (index == 2) {
             showModalBottomSheet(
               context: context,
               isDismissible: false,
