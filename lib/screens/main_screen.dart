@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
   @override
   void initState() {
     super.initState();
-    motionModel();
+    // motionModel();
     startListeningShake(15);
     getConnection();
 
