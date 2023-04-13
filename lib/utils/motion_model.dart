@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:kavach/utils/sos_fn.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 
-import '../utils/model_enum.dart' as enums;
 import 'db_trigger.dart';
+import 'enums.dart' as enums;
+import 'sos_fn.dart';
 
 void motionModel() {
   loadModel();

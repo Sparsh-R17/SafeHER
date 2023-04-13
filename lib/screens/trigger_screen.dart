@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kavach/screens/main_screen.dart';
-import 'package:kavach/utils/app_dimension.dart';
-import 'package:kavach/utils/sos_fn.dart';
+import 'main_screen.dart';
+import '../utils/app_dimension.dart';
+import '../utils/sos_fn.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/trigger.dart';

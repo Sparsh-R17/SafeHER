@@ -1,12 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-import '/providers/internet_connectivity.dart';
 import 'package:provider/provider.dart';
 
+import '/providers/internet_connectivity.dart';
 import 'firebase_options.dart';
-
 import 'providers/trigger.dart';
 import 'screens/main_screen.dart';
 
@@ -16,6 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setPreferredOrientations(
+
     [
       DeviceOrientation.portraitUp,
     ],

@@ -14,7 +14,7 @@ class _CallScreenState extends State<CallScreen> {
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
 
-    String phoneNumber = "+919642389700";
+    String phoneNumber = "+91 9642389700";
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -8,7 +8,7 @@ import '../providers/trigger.dart';
 import '../utils/app_dimension.dart';
 import '../utils/sos_fn.dart';
 import '../widgets/current_map.dart';
-import './offline_home.dart';
+import 'offline_home.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
