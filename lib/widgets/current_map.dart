@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../helper/location_helper.dart';
-import '../utils/app_dimension.dart';
 import 'package:location/location.dart';
 
+import '../helper/location_helper.dart';
 import '../screens/maps_screen.dart';
+import '../utils/app_dimension.dart';
 
 class CurrentMap extends StatefulWidget {
   const CurrentMap({super.key});
@@ -21,8 +19,8 @@ class _CurrentMapState extends State<CurrentMap> {
   String? imgUrl;
   String marker = '';
   void _generateMap(double lat, double lng, String nearPlace) {
-    // imgUrl = LocationHelper.generateLocationImage(
-        // latitude: lat, longitude: lng, safePlaceUrl: nearPlace);
+    imgUrl = LocationHelper.generateLocationImage(
+        latitude: lat, longitude: lng, safePlaceUrl: nearPlace);
   }
 
   List<dynamic> safePlaces = [
@@ -49,7 +47,7 @@ class _CurrentMapState extends State<CurrentMap> {
       final locData = await Location().getLocation();
       currentLocation = locData;
       print(nearPlaces);
-      // _generateMap(locData.latitude!, locData.longitude!, nearPlaces);
+      _generateMap(locData.latitude!, locData.longitude!, nearPlaces);
     } catch (e) {
       print(e);
     }
@@ -70,7 +68,7 @@ class _CurrentMapState extends State<CurrentMap> {
       return;
     }
     //TODO need to change marker according to the place chosen
-    // setState(() {
+    // useless ===> setState(() {
     //   _generateMap(selectedLocation.latitude, selectedLocation.longitude);
     // });
   }

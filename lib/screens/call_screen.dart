@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/utils/app_dimension.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../utils/app_dimension.dart';
 
 class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
@@ -111,7 +113,7 @@ class _CallScreenState extends State<CallScreen> {
               ),
               Padding(
                   padding: EdgeInsets.only(
-                      top: pageHeight * 0.04, right: pageWidth * 0.1),
+                      top: pageHeight * 0.04, right: pageWidth * 0.09),
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ButtonStyle(
@@ -167,8 +169,8 @@ class _CallScreenState extends State<CallScreen> {
               child: FloatingActionButton.extended(
                 backgroundColor: Theme.of(context).colorScheme.errorContainer,
                 onPressed: () {},
-                icon: Image.asset(
-                  "assets/png/e911.png",
+                icon: SvgPicture.asset(
+                  "assets/svg/e911.svg",
                 ),
                 label: Padding(
                   padding: EdgeInsets.only(left: pageWidth * 0.02),

@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:provider/provider.dart';
-
 import 'package:shake_event/shake_event.dart';
 
 import '../providers/internet_connectivity.dart';
 import '../providers/trigger.dart';
 import '../screens/trigger_screen.dart';
-
 import '../utils/db_trigger.dart';
-import '../utils/motion_model.dart';
 import '../utils/sos_fn.dart';
 import '../widgets/location_share.dart';
 import 'call_screen.dart';

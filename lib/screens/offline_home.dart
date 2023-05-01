@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/trigger.dart';
 import '../utils/app_dimension.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../utils/sos_fn.dart';
 import 'trigger_screen.dart';
 

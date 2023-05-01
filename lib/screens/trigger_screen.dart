@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'main_screen.dart';
-import '../utils/app_dimension.dart';
-import '../utils/sos_fn.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/trigger.dart';
+import '../utils/app_dimension.dart';
+import '../utils/sos_fn.dart';
+import 'main_screen.dart';
 
 class TriggerScreen extends StatefulWidget {
   const TriggerScreen({super.key});
