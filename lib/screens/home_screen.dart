@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kavach/screens/commmunity_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/internet_connectivity.dart';
@@ -71,6 +72,30 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CommunityScreen()));
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(
+                        Size(pageWidth * 0.1, pageHeight * 0.045),
+                      ),
+                      backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).colorScheme.secondaryContainer),
+                      shape: const MaterialStatePropertyAll(
+                        CircleBorder(),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.groups,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                  horizontalSpacing(pageWidth * 0.038)
                 ],
               ),
               trigger.bannerTrigger
