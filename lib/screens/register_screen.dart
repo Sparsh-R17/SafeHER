@@ -25,15 +25,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             Stack(
               children: [
-                Padding(
+                Container(
+                  width: pageWidth * 0.45,
                   padding: EdgeInsets.only(
-                      top: pageHeight * 0.11, left: pageWidth * 0.036),
-                  child: Text(
-                    "Create an \naccount",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(fontWeight: FontWeight.w500),
+                    top: pageHeight * 0.11,
+                    left: pageWidth * 0.036,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "Create an \naccount",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 Padding(
@@ -43,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 )
               ],
             ),
-            verticalSpacing(pageHeight * 0.02),
+            verticalSpacing(pageHeight * 0.012),
             Container(
               padding: EdgeInsets.symmetric(horizontal: pageWidth * 0.097),
               width: pageWidth,
@@ -185,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             verticalSpacing(pageHeight * 0.018),
             SizedBox(
-              width: pageWidth * 0.56,
+              width: pageWidth * 0.62,
               height: pageHeight * 0.056,
               child: FilledButton(
                 style: ButtonStyle(
@@ -201,16 +207,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: pageHeight * 0.04,
                     ),
                     const Spacer(),
-                    Text(
-                      "Sign Up with Google",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.surfaceVariant,
-                              fontWeight: FontWeight.bold)
-                          .apply(fontSizeFactor: 1.125),
+                    SizedBox(
+                      width: pageWidth * 0.45,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Sign Up with Google",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceVariant,
+                                  fontWeight: FontWeight.bold)
+                              .apply(fontSizeFactor: 1.125),
+                        ),
+                      ),
                     ),
                     const Spacer(),
                   ],

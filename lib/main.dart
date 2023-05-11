@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kavach/screens/register_screen.dart';
 import 'screens/main_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setPreferredOrientations(
-
     [
       DeviceOrientation.portraitUp,
     ],
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
-            home: const MainScreen(),
+            home: const RegisterScreen(),
           );
         },
       ),
