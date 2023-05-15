@@ -24,3 +24,8 @@ enum Reason {
   public,
   custom,
 }
+
+enum Auth {
+  signup,
+  login,
+}

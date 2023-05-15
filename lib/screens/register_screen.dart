@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../utils/app_dimension.dart';
+import '../utils/enums.dart';
+import '../widgets/auth_form.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -10,9 +14,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final GlobalKey<FormState> _authForm = GlobalKey<FormState>();
-  bool _obscure1 = true;
-  bool _obscure2 = true;
+  Auth authType = Auth.login;
+
   @override
   Widget build(BuildContext context) {
     final pageWidth = MediaQuery.of(context).size.width;
@@ -28,13 +31,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   width: pageWidth * 0.45,
                   padding: EdgeInsets.only(
-                    top: pageHeight * 0.11,
+                    top: pageHeight * 0.08,
                     left: pageWidth * 0.036,
                   ),
                   child: FittedBox(
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.scaleDown,
                     child: Text(
-                      "Create an \naccount",
+                      authType == Auth.login
+                          ? "Already \nhave an \naccount"
+                          : "Create an \naccount",
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium!
@@ -50,90 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             verticalSpacing(pageHeight * 0.012),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: pageWidth * 0.097),
-              width: pageWidth,
-              height: pageHeight * 0.4,
-              child: Form(
-                key: _authForm,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Username",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    TextFormField(
-                      textInputAction: TextInputAction.next,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.white)
-                          .apply(fontSizeFactor: 1.125),
-                    ),
-                    verticalSpacing(pageHeight * 0.015),
-                    Text(
-                      "Email",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.white)
-                          .apply(fontSizeFactor: 1.125),
-                    ),
-                    verticalSpacing(pageHeight * 0.015),
-                    Text(
-                      "Password",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    TextFormField(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.white),
-                      obscureText: _obscure1,
-                      obscuringCharacter: '*',
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: _obscure1
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _obscure1 = !_obscure1;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    verticalSpacing(pageHeight * 0.015),
-                    Text(
-                      "Confirm Password",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    TextFormField(
-                      obscureText: _obscure2,
-                      obscuringCharacter: '*',
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: _obscure2
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _obscure2 = !_obscure2;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            AuthForm(
+              authType: authType,
             ),
             Center(
               child: SizedBox(
@@ -145,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Theme.of(context).colorScheme.secondary),
                   ),
                   child: Text(
-                    "Sign Up",
+                    authType == Auth.login ? "Login" : "Sign Up",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -162,20 +85,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             TextButton(
               onPressed: () {
-                print("TextButton Tap");
+                setState(() {
+                  if (authType == Auth.login) {
+                    authType = Auth.signup;
+                  } else {
+                    authType = Auth.login;
+                  }
+                });
               },
               style: const ButtonStyle(splashFactory: NoSplash.splashFactory),
-              child: const Text("Already Have an account? Login"),
+              child: Text(authType == Auth.login
+                  ? "Don’t have an account? Sign Up"
+                  : "Already Have an account? Login"),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                    child: Divider(
-                  thickness: pageWidth * 0.007,
-                  indent: pageWidth * 0.097,
-                  endIndent: pageWidth * 0.05,
-                )),
+                  child: Divider(
+                    thickness: pageWidth * 0.007,
+                    indent: pageWidth * 0.097,
+                    endIndent: pageWidth * 0.05,
+                  ),
+                ),
                 Text(
                   "OR",
                   style: Theme.of(context).textTheme.titleMedium,
@@ -190,51 +122,100 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             verticalSpacing(pageHeight * 0.018),
-            SizedBox(
-              width: pageWidth * 0.62,
-              height: pageHeight * 0.056,
-              child: FilledButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                      Theme.of(context).colorScheme.secondary),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/google.svg",
-                      width: pageWidth * 0.05,
-                      height: pageHeight * 0.04,
+            authType == Auth.login
+                ? SizedBox(
+                    width: pageWidth * 0.475,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        loginButton(
+                            pageHeight,
+                            Icon(
+                              Icons.phone,
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                            ),
+                            context),
+                        loginButton(
+                            pageHeight,
+                            FaIcon(
+                              FontAwesomeIcons.google,
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                            ),
+                            context)
+                      ],
                     ),
-                    const Spacer(),
-                    SizedBox(
-                      width: pageWidth * 0.45,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          "Sign Up with Google",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .surfaceVariant,
-                                  fontWeight: FontWeight.bold)
-                              .apply(fontSizeFactor: 1.125),
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                onPressed: () {
-                  print("SignUpGoogle Tap");
-                },
-              ),
-            ),
+                  )
+                : signUpGoogle(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget loginButton(
+    double pageHeight,
+    Widget buttonIcon,
+    BuildContext context,
+  ) {
+    return IconButton.filled(
+      iconSize: pageHeight * 0.035,
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(
+          Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      onPressed: () {},
+      icon: buttonIcon,
+    );
+  }
+
+  Widget signUpGoogle(BuildContext context) {
+    final pageHeight = MediaQuery.of(context).size.height;
+    final pageWidth = MediaQuery.of(context).size.width;
+
+    //TODO -> Change Row at line 188 to FilledButton.icon and use FaIcon (ex. at line 141)
+
+    return SizedBox(
+      width: pageWidth * 0.62,
+      height: pageHeight * 0.056,
+      child: FilledButton(
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              "assets/svg/google.svg",
+              width: pageWidth * 0.05,
+              height: pageHeight * 0.04,
+            ),
+            const Spacer(),
+            SizedBox(
+              width: pageWidth * 0.45,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "Sign Up with Google",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(
+                          color: Theme.of(context).colorScheme.surfaceVariant,
+                          fontWeight: FontWeight.bold)
+                      .apply(fontSizeFactor: 1.125),
+                ),
+              ),
+            ),
+            const Spacer(),
+          ],
+        ),
+        onPressed: () {
+          print("SignUpGoogle Tap");
+        },
       ),
     );
   }
