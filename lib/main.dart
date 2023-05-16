@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kavach/screens/emergency_contacts.dart';
 import 'package:kavach/screens/register_screen.dart';
 import 'screens/main_screen.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
-            home: const RegisterScreen(),
+            home: const EmergencyContacts(),
           );
         },
       ),
