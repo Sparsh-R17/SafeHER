@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:kavach/screens/emergency_contacts.dart';
 import 'package:kavach/screens/register_screen.dart';
 import 'screens/main_screen.dart';
+import 'screens/info_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/internet_connectivity.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
-            home: const EmergencyContacts(),
+            home: const InfoScreen(),
           );
         },
       ),
