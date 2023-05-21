@@ -65,8 +65,6 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
     });
   }
 
- 
-
   @override
   shakeEventListener() {
     // TODO: implement shakeEventListener
@@ -90,7 +88,7 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
   //     priority: Priority.high,
   //   );
   //   var platformChannelSpecifics = NotificationDetails(
-  //     android: androidPlatformChannel,
+  //     android: androidPlatformChannel,lib/screens/main_screen.dart
   //   );
   //   await flutterLocalNotificationsPlugin!.show(
   //     0,

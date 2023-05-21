@@ -35,8 +35,7 @@ class _InfoScreenState extends State<InfoScreen> {
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: pageWidth * 0.06),
@@ -46,34 +45,26 @@ class _InfoScreenState extends State<InfoScreen> {
                 Column(
                   children: [
                     // verticalSpacing(pageHeight * 0.0625),
-                    Container(
-                      // padding: EdgeInsets.zero,
+                    Align(
                       alignment: Alignment.topRight,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            // backgroundColor: Colors.transparent,
-                            // foregroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            surfaceTintColor: Colors.transparent,
-                          ),
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextButton.icon(
                           onPressed: () {},
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                "Logout",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              horizontalSpacing(pageWidth * 0.0138),
-                              const Icon(
-                                Icons.logout_outlined,
-                                color: Colors.white,
-                              ),
-                            ],
-                          )),
+                          icon: const Icon(Icons.logout),
+                          label: const Text('Logout'),
+                          style: ButtonStyle(
+                            iconColor: MaterialStatePropertyAll(
+                              Theme.of(context).colorScheme.tertiary,
+                            ),
+                            foregroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).colorScheme.tertiary,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
+
                     Image.asset(
                       "assets/png/avatar_1.png",
                       width: pageWidth * 0.325,
@@ -120,7 +111,10 @@ class _InfoScreenState extends State<InfoScreen> {
                                       .textTheme
                                       .labelMedium
                                       ?.copyWith(
-                                          color: const Color(0xffAEAAAE)),
+                                        color: const Color(0xffAEAAAE),
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                 )
                               ],
                             )
@@ -132,10 +126,11 @@ class _InfoScreenState extends State<InfoScreen> {
                 Text(
                   "Personal Information",
                   textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: Theme.of(context).colorScheme.primary),
+                  textScaleFactor: 1.1,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
                 // verticalSpacing(pageHeight * 0.01),
                 ListTile(
@@ -150,7 +145,9 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                   subtitle: Text(
                     "987654321",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                   ),
                 ),
                 ListTile(
@@ -165,7 +162,9 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                   subtitle: Text(
                     "Baba babham bole street",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                   ),
                 ),
                 Padding(
@@ -176,7 +175,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                   child: Divider(
                     thickness: 2,
-                    color: Theme.of(context).colorScheme.outline,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 ListView.builder(
@@ -197,7 +196,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }
@@ -224,7 +223,7 @@ class infoTile extends StatelessWidget {
       ),
       title: Text(
         data,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       onTap: () {},
     );

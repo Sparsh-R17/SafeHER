@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/utils/app_dimension.dart';
+import '../utils/app_dimension.dart';
 
 import '../widgets/contact_list.dart';
 

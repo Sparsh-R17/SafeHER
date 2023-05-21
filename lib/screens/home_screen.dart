@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kavach/screens/commmunity_screen.dart';
+import 'commmunity_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/internet_connectivity.dart';

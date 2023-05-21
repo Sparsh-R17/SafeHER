@@ -20,7 +20,7 @@ class _CurrentMapState extends State<CurrentMap> {
   String marker = '';
   void _generateMap(double lat, double lng, String nearPlace) {
     // imgUrl = LocationHelper.generateLocationImage(
-    //     latitude: lat, longitude: lng, safePlaceUrl: nearPlace);
+    // latitude: lat, longitude: lng, safePlaceUrl: nearPlace);
   }
 
   List<dynamic> safePlaces = [
