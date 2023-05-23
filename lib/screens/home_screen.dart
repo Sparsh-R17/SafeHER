@@ -53,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                         maxRadius: pageWidth * 0.09,
                         foregroundImage:
                             const AssetImage('assets/png/avatar_1.png'),
+                        // Image.network(_auth.currentUser!.photoURL!).image
                       ),
                     ),
                   ),

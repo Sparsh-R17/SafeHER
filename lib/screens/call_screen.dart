@@ -31,15 +31,18 @@ class _CallScreenState extends State<CallScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          Container(
             padding: EdgeInsets.only(
                 left: pageWidth * 0.08, top: pageHeight * 0.0438),
-            child: Text(
-              "Fake Call",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
+            width: pageWidth * 0.35,
+            child: FittedBox(
+              child: Text(
+                "Fake Call",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+              ),
             ),
           ),
           verticalSpacing(pageHeight * 0.03),
@@ -52,7 +55,7 @@ class _CallScreenState extends State<CallScreen> {
                   FocusScope.of(context).unfocus();
                   FocusScope.of(context).nextFocus();
                 },
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
                 decoration: InputDecoration(
                     label: const Text("Name"),
                     border: const OutlineInputBorder(),
@@ -64,13 +67,18 @@ class _CallScreenState extends State<CallScreen> {
                       onPressed: () {},
                     )),
               )),
-          Padding(
+          Container(
+            alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(
                 left: pageWidth * 0.108, top: pageHeight * 0.01),
-            child: Text(
-              "Enter the name/number of the fake caller",
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+            width: pageWidth * 0.8,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Text(
+                "Enter the name/number of the fake caller",
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
             ),
           ),
           Padding(
@@ -79,7 +87,7 @@ class _CallScreenState extends State<CallScreen> {
                   top: pageHeight * 0.035,
                   right: pageWidth * 0.08),
               child: TextFormField(
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
                 obscureText: true,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -90,28 +98,37 @@ class _CallScreenState extends State<CallScreen> {
                       vertical: pageHeight * 0.025),
                 ),
               )),
-          Padding(
+          Container(
+            alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(
                 left: pageWidth * 0.108, top: pageHeight * 0.01),
-            child: Text(
-              "Edit the password",
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+            width: pageWidth * 0.65,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "Edit the password",
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
+              Container(
                 padding: EdgeInsets.only(
                     left: pageWidth * 0.08, top: pageHeight * 0.04),
-                child: Text(
-                  "Add recording for the call",
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w400),
+                width: pageWidth * 0.6,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(
+                    "Add recording for the call",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
-              Padding(
+              Container(
                   padding: EdgeInsets.only(
                       top: pageHeight * 0.04, right: pageWidth * 0.09),
                   child: ElevatedButton(
@@ -153,12 +170,16 @@ class _CallScreenState extends State<CallScreen> {
           )),
           verticalSpacing(pageHeight * 0.04),
           Center(
-            child: Text(
-              "For Emergency Services",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+            child: SizedBox(
+              width: pageWidth * 0.475,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  "For Emergency Services",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w400),
+                ),
+              ),
             ),
           ),
           verticalSpacing(pageHeight * 0.005),
@@ -171,15 +192,22 @@ class _CallScreenState extends State<CallScreen> {
                 onPressed: () {},
                 icon: SvgPicture.asset(
                   "assets/svg/e911.svg",
+                  fit: BoxFit.scaleDown,
+                  width: pageWidth * 0.138,
+                  height: pageHeight * 0.0625,
                 ),
                 label: Padding(
                   padding: EdgeInsets.only(left: pageWidth * 0.02),
-                  child: Text(
-                    'Call 911',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontWeight: FontWeight.w500),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Call 911',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontWeight: FontWeight.w500)
+                          .apply(fontSizeFactor: 1.2),
+                    ),
                   ),
                 ),
               ),
