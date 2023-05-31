@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'providers/contacts.dart';
 import 'screens/emergency_contacts.dart';
 import 'screens/register_screen.dart';
 import 'screens/main_screen.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<InternetConnection>(
           create: (context) => InternetConnection(),
+        ),
+        ChangeNotifierProvider<Contacts>(
+          create: (context) => Contacts(),
         )
       ],
       child: Consumer<Trigger>(
@@ -52,7 +56,11 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
-            home: const MainScreen(),
+            home: const EmergencyContacts(),
+            routes: {
+              EmergencyContacts.routeName: (context) =>
+                  const EmergencyContacts(),
+            },
           );
         },
       ),

@@ -217,31 +217,32 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
           }
         },
         selectedIndex: pageIndex,
-        destinations: [
-          const NavigationDestination(
+        destinations: const [
+          NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(
               Icons.home_outlined,
             ),
             label: 'Home',
           ),
-          if (connection.status != ConnectivityMode.offline)
-            const NavigationDestination(
-              selectedIcon: Icon(Icons.phone_callback),
-              icon: Icon(
-                Icons.phone_callback_outlined,
-              ),
-              label: 'Phone Calls',
+          //TODO need to optimize list according to the connectivity mode
+          // if (connection.status != ConnectivityMode.offline)
+          NavigationDestination(
+            selectedIcon: Icon(Icons.phone_callback),
+            icon: Icon(
+              Icons.phone_callback_outlined,
             ),
-          if (connection.status != ConnectivityMode.offline)
-            const NavigationDestination(
-              selectedIcon: Icon(Icons.share_location),
-              icon: Icon(
-                Icons.share_location_outlined,
-              ),
-              label: 'Location',
+            label: 'Phone Calls',
+          ),
+          // if (connection.status != ConnectivityMode.offline)
+          NavigationDestination(
+            selectedIcon: Icon(Icons.share_location),
+            icon: Icon(
+              Icons.share_location_outlined,
             ),
-          const NavigationDestination(
+            label: 'Location',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.book),
             icon: Icon(
               Icons.book_outlined,

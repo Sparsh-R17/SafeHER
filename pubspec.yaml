@@ -30,6 +30,7 @@ environment:
 dependencies:
   background_sms: ^0.0.4
   connectivity_plus: ^3.0.3
+  contacts_service: ^0.6.3
   csv: ^5.0.1
   cupertino_icons: ^1.0.2
   dynamic_color: ^1.6.2
