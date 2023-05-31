@@ -1,6 +1,4 @@
-import 'package:background_sms/background_sms.dart';
-import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 
 List<String> trySOS = [
   '08075842864',

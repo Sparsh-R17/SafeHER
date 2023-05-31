@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'commmunity_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/internet_connectivity.dart';
@@ -9,6 +9,7 @@ import '../providers/trigger.dart';
 import '../utils/app_dimension.dart';
 import '../utils/sos_fn.dart';
 import '../widgets/current_map.dart';
+import 'commmunity_screen.dart';
 import 'offline_home.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
     final connection = Provider.of<InternetConnection>(context);
     final trigger = Provider.of<Trigger>(context);
+    final _auth = FirebaseAuth.instance;
 
     if (trigger.bannerTrigger == true) {
       Timer(const Duration(seconds: 20), () {
@@ -51,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                         maxRadius: pageWidth * 0.09,
                         foregroundImage:
                             const AssetImage('assets/png/avatar_1.png'),
+                        // Image.network(_auth.currentUser!.photoURL!).image
                       ),
                     ),
                   ),
@@ -67,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Ayushri Bhuyan',
+                        _auth.currentUser!.displayName!,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],

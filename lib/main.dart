@@ -1,16 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'providers/contacts.dart';
-import 'screens/emergency_contacts.dart';
-import 'screens/register_screen.dart';
-import 'screens/main_screen.dart';
-import 'screens/info_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/internet_connectivity.dart';
 import 'firebase_options.dart';
 import 'providers/trigger.dart';
+import 'screens/emergency_contacts.dart';
+import 'screens/main_screen.dart';
+import 'screens/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +56,16 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               brightness: Brightness.dark,
             ),
-            home: const EmergencyContacts(),
+            home: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return const MainScreen();
+                } else {
+                  return const RegisterScreen();
+                }
+              },
+            ),
             routes: {
               EmergencyContacts.routeName: (context) =>
                   const EmergencyContacts(),

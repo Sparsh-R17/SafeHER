@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../utils/app_dimension.dart';
 
 import 'emergency_contacts.dart';
@@ -55,11 +57,16 @@ class _InfoScreenState extends State<InfoScreen> {
       pageRoute: EmergencyContacts.routeName,
     )
   ];
-
+  String provider = "";
   @override
   Widget build(BuildContext context) {
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
+
+    var user = FirebaseAuth.instance.currentUser!;
+    for (final i in user.providerData) {
+      provider = i.providerId;
+    }
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -76,7 +83,14 @@ class _InfoScreenState extends State<InfoScreen> {
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (provider == "google.com") {
+                            GoogleSignIn().signOut();
+                            FirebaseAuth.instance.signOut();
+                          } else {
+                            FirebaseAuth.instance.signOut();
+                          }
+                        },
                         icon: const Icon(Icons.logout),
                         label: const Text('Logout'),
                         style: ButtonStyle(
@@ -98,7 +112,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                   verticalSpacing(pageHeight * 0.0325),
                   Text(
-                    "Ayushri Bhuyan",
+                    user.displayName!,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   verticalSpacing(pageHeight * 0.02875),
@@ -134,8 +148,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                 "Info is saved on this device",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
+                                    .labelMedium!
+                                    .copyWith(
                                       color: const Color(0xffAEAAAE),
                                       fontStyle: FontStyle.italic,
                                       fontWeight: FontWeight.w400,
@@ -209,7 +223,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return infoTile(
+                  return InfoTile(
                     pageHeight: pageHeight,
                     data: infoData[index].text,
                     icon: infoData[index].icon,
@@ -226,8 +240,8 @@ class _InfoScreenState extends State<InfoScreen> {
   }
 }
 
-class infoTile extends StatelessWidget {
-  const infoTile({
+class InfoTile extends StatelessWidget {
+  const InfoTile({
     super.key,
     required this.pageHeight,
     required this.icon,
