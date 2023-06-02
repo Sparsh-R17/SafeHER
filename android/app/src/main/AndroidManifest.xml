@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <application
         android:name="${applicationName}"
-        android:label="kavach"
+        android:label="SafeHER"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <service android:name="flutter.overlay.window.flutter_overlay_window.OverlayService" android:exported="false" />

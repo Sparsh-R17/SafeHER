@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<InternetConnection>(
           create: (context) => InternetConnection(),
         ),
-        ChangeNotifierProvider<Contacts>(
-          create: (context) => Contacts(),
+        ChangeNotifierProvider<ContactProvider>(
+          create: (context) => ContactProvider(),
         )
       ],
       child: Consumer<Trigger>(

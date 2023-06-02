@@ -34,17 +34,24 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
       }
     });
     getContactPermission();
+    Provider.of<ContactProvider>(context, listen: false).getAllContacts();
+  }
+
+  void fetchContacts() {
+    print('Contacts Fetched');
+    Provider.of<ContactProvider>(context, listen: false).getAllContacts();
   }
 
   ScrollController scrollDirection = ScrollController();
   bool fabExtended = false;
+  int editedStringLength = 0;
+  bool _boxSelected = false;
 
   @override
   Widget build(BuildContext context) {
     final pageHeight = MediaQuery.of(context).size.height;
     final pageWidth = MediaQuery.of(context).size.width;
     TextEditingController contactController = TextEditingController();
-    final emergencyContacts = Provider.of<Contacts>(context, listen: false);
 
     return Scaffold(
       body: CustomScrollView(
@@ -122,15 +129,12 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await emergencyContacts.getAllContacts();
-
+        onPressed: () {
           addContactsDialog(
             context,
             pageWidth,
             pageHeight,
             contactController,
-            emergencyContacts.contacts,
           );
         },
         label: Text(
@@ -150,92 +154,110 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
     double pageWidth,
     double pageHeight,
     TextEditingController contactController,
-    List<Contact> emergencyContactsList,
   ) {
     return showDialog(
       context: context,
       builder: (context) {
-        return Dialog(
-          backgroundColor: Color.alphaBlend(
-            Theme.of(context).colorScheme.primary.withOpacity(0.11),
-            Theme.of(context).colorScheme.surface,
-          ),
-          insetPadding: EdgeInsets.symmetric(
-            horizontal: pageWidth * 0.07,
-            vertical: pageHeight * 0.08,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: pageWidth * 0.05,
-            ),
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: pageHeight * 0.8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpacing(pageHeight * 0.025),
-                    TextField(
-                      controller: contactController,
-                      decoration: const InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.search,
-                        ),
-                        hintText: 'Search Contacts',
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          emergencyContactsList.removeWhere((element) {
-                            return !element.displayName!.contains(value);
-                          });
-                        });
-                        emergencyContactsList
-                            .forEach((element) => print(element.displayName));
-                      },
-                      onTapOutside: (event) {
-                        FocusScope.of(context).unfocus();
-                      },
-                    ),
-                    verticalSpacing(pageHeight * 0.025),
-                    // if (MediaQuery.of(context).viewInsets.bottom == 0)
-                    SizedBox(
-                      height: pageHeight * 0.6,
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: emergencyContactsList.length,
-                        itemBuilder: (context, index) {
-                          return contactsSelection(
-                            pageWidth,
-                            emergencyContactsList,
-                            index,
-                          );
-                        },
-                      ),
-                    ),
-                    const Spacer(),
-                    // if (MediaQuery.of(context).viewInsets.bottom == 0)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+        return Consumer<ContactProvider>(
+          builder: (context, value, _) {
+            return Dialog(
+              backgroundColor: Color.alphaBlend(
+                Theme.of(context).colorScheme.primary.withOpacity(0.11),
+                Theme.of(context).colorScheme.surface,
+              ),
+              insetPadding: EdgeInsets.symmetric(
+                horizontal: pageWidth * 0.07,
+                vertical: pageHeight * 0.08,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: pageWidth * 0.05,
+                ),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: pageHeight * 0.8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Cancel'),
+                        verticalSpacing(pageHeight * 0.025),
+                        TextField(
+                          controller: contactController,
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.search,
+                            ),
+                            hintText: 'Search Contacts',
+                          ),
+                          onChanged: (value) {
+                            if (editedStringLength == 0) {
+                              //First case
+                              editedStringLength = value.length;
+                              Provider.of<ContactProvider>(context,
+                                      listen: false)
+                                  .searchContacts(value);
+                            } else {
+                              if (value.length < editedStringLength) {
+                                //Backspace Triggered
+                                print('Backspaced Detected');
+                                editedStringLength = value.length;
+                                Provider.of<ContactProvider>(context,
+                                        listen: false)
+                                    .clearAndSearchContacts(value);
+                              } else {
+                                //Typing case
+                                editedStringLength = value.length;
+                                Provider.of<ContactProvider>(context,
+                                        listen: false)
+                                    .searchContacts(value);
+                              }
+                            }
+                          },
+                          onTapOutside: (event) {
+                            FocusScope.of(context).unfocus();
+                          },
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Save'),
-                        )
+                        verticalSpacing(pageHeight * 0.025),
+                        // if (MediaQuery.of(context).viewInsets.bottom == 0)
+                        SizedBox(
+                          height: pageHeight * 0.6,
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: value.contacts.length,
+                            itemBuilder: (context, index) {
+                              return contactsSelection(
+                                pageWidth,
+                                value.contacts,
+                                index,
+                              );
+                            },
+                          ),
+                        ),
+                        const Spacer(),
+                        // if (MediaQuery.of(context).viewInsets.bottom == 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text('Save'),
+                            )
+                          ],
+                        ),
+                        const Spacer(),
                       ],
                     ),
-                    const Spacer(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );
@@ -249,8 +271,12 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
     return CheckboxListTile.adaptive(
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.leading,
-      value: true,
-      onChanged: (value) {},
+      value: _boxSelected,
+      onChanged: (value) {
+        setState(() {
+          _boxSelected = value!;
+        });
+      },
       title: Row(
         children: [
           CircleAvatar(
