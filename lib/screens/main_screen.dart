@@ -179,6 +179,7 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
                       },
                       icon: Icon(
                         Icons.crisis_alert,
+                        color: Theme.of(context).colorScheme.onBackground,
                         size: pageHeight * 0.04,
                       ),
                       label: Text(

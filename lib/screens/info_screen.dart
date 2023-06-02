@@ -268,7 +268,7 @@ class InfoTile extends StatelessWidget {
       ),
       onTap: () => Navigator.pushNamed(
         context,
-        EmergencyContacts.routeName,
+        route,
       ),
     );
   }
