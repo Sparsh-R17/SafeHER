@@ -199,7 +199,7 @@ class _CallScreenState extends State<CallScreen> {
                 label: Padding(
                   padding: EdgeInsets.only(left: pageWidth * 0.02),
                   child: FittedBox(
-                    fit: BoxFit.contain,
+                    fit: BoxFit.scaleDown,
                     child: Text(
                       'Call 911',
                       style: Theme.of(context)

@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
     final pageWidth = MediaQuery.of(context).size.width;
     final connection = Provider.of<InternetConnection>(context);
     final trigger = Provider.of<Trigger>(context);
-    final _auth = FirebaseAuth.instance;
+    final auth = FirebaseAuth.instance;
 
     if (trigger.bannerTrigger == true) {
       Timer(const Duration(seconds: 20), () {
@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        _auth.currentUser!.displayName!,
+                        auth.currentUser!.displayName!,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
@@ -111,7 +111,6 @@ class HomeScreen extends StatelessWidget {
                               sendSOS(true);
                               print("Banner Cancel!");
                             },
-                            child: const Icon(Icons.close),
                             style: ButtonStyle(
                                 iconColor: MaterialStatePropertyAll(
                                   Theme.of(context).colorScheme.errorContainer,
@@ -121,6 +120,7 @@ class HomeScreen extends StatelessWidget {
                                       .colorScheme
                                       .onErrorContainer,
                                 )),
+                            child: const Icon(Icons.close),
                           ),
                         ])
                   : Container(

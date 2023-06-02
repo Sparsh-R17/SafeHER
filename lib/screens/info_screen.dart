@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'medical_info.dart';
 import '../utils/app_dimension.dart';
 
+import '../widgets/info_tile.dart';
 import 'emergency_contacts.dart';
 
 class InfoData {
@@ -29,7 +31,7 @@ class _InfoScreenState extends State<InfoScreen> {
     InfoData(
       icon: Icons.medical_services_outlined,
       text: "Medical Information",
-      pageRoute: EmergencyContacts.routeName,
+      pageRoute: MedicalInfo.routeName,
     ),
     InfoData(
       icon: Icons.contact_emergency_outlined,
@@ -228,6 +230,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     data: infoData[index].text,
                     icon: infoData[index].icon,
                     route: infoData[index].pageRoute,
+                    med: false,
                   );
                 },
               )
@@ -235,40 +238,6 @@ class _InfoScreenState extends State<InfoScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class InfoTile extends StatelessWidget {
-  const InfoTile({
-    super.key,
-    required this.pageHeight,
-    required this.icon,
-    required this.data,
-    required this.route,
-  });
-
-  final double pageHeight;
-  final IconData icon;
-  final String data;
-  final String route;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Theme.of(context).colorScheme.onSecondaryContainer,
-        size: pageHeight * 0.03,
-      ),
-      title: Text(
-        data,
-        style: Theme.of(context).textTheme.bodyLarge,
-      ),
-      onTap: () => Navigator.pushNamed(
-        context,
-        EmergencyContacts.routeName,
       ),
     );
   }

@@ -73,7 +73,7 @@ void _setOrientation(double anglexy, double angleyz, double anglexz) {
 }
 
 modelTimer() {
-  Timer.periodic(Duration(milliseconds: 50), (timer) {
+  Timer.periodic(const Duration(milliseconds: 50), (timer) {
     y = double.parse(currentState[1].toStringAsFixed(2));
     z = double.parse(currentState[2].toStringAsFixed(2));
     x = double.parse(currentState[0].toStringAsFixed(2));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kavach/services/auth_service.dart';
+import '../services/auth_service.dart';
 
 import '../utils/app_dimension.dart';
 import '../utils/enums.dart';
@@ -81,10 +81,10 @@ class _AuthFormState extends State<AuthForm> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "First Name",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
+                                // Text(
+                                //   "First Name",
+                                //   style: Theme.of(context).textTheme.bodyLarge,
+                                // ),
                                 TextFormField(
                                   textInputAction: TextInputAction.next,
                                   autovalidateMode:
@@ -98,8 +98,23 @@ class _AuthFormState extends State<AuthForm> {
                                     }
                                     return null;
                                   },
-                                  decoration:
-                                      const InputDecoration(errorMaxLines: 2),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: pageHeight * 0.001,
+                                    ),
+                                    errorMaxLines: 2,
+                                    label: Text(
+                                      "First Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                    ),
+                                  ),
                                   controller: firstName,
                                   style: Theme.of(context)
                                       .textTheme
@@ -115,10 +130,10 @@ class _AuthFormState extends State<AuthForm> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Last Name",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
+                                // Text(
+                                //   "Last Name",
+                                //   style: Theme.of(context).textTheme.bodyLarge,
+                                // ),
                                 TextFormField(
                                   textInputAction: TextInputAction.next,
                                   controller: lastName,
@@ -133,8 +148,23 @@ class _AuthFormState extends State<AuthForm> {
                                     }
                                     return null;
                                   },
-                                  decoration:
-                                      const InputDecoration(errorMaxLines: 2),
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 2,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: pageHeight * 0.001,
+                                    ),
+                                    label: Text(
+                                      "Last Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                    ),
+                                  ),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -148,11 +178,11 @@ class _AuthFormState extends State<AuthForm> {
                       )
                     ],
                   ),
-                verticalSpacing(pageHeight * 0.015),
-                Text(
-                  "Email",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                verticalSpacing(pageHeight * 0.03),
+                // Text(
+                //   "Email",
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -167,17 +197,28 @@ class _AuthFormState extends State<AuthForm> {
                   },
                   controller: email,
                   textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    label: Text(
+                      "Email",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: pageHeight * 0.001,
+                    ),
+                  ),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
                       .copyWith(color: Colors.white)
                       .apply(fontSizeFactor: 1.125),
                 ),
-                verticalSpacing(pageHeight * 0.015),
-                Text(
-                  "Password",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                verticalSpacing(pageHeight * 0.03),
+                // Text(
+                //   "Password",
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                // ),
                 TextFormField(
                   style: Theme.of(context)
                       .textTheme
@@ -197,6 +238,15 @@ class _AuthFormState extends State<AuthForm> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    label: Text(
+                      "Password",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: pageHeight * 0.001,
+                    ),
                     suffixIcon: IconButton(
                       icon: _obscure1
                           ? const Icon(Icons.visibility_off)
@@ -213,11 +263,11 @@ class _AuthFormState extends State<AuthForm> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      verticalSpacing(pageHeight * 0.015),
-                      Text(
-                        "Confirm Password",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                      verticalSpacing(pageHeight * 0.03),
+                      // Text(
+                      //   "Confirm Password",
+                      //   style: Theme.of(context).textTheme.bodyLarge,
+                      // ),
                       TextFormField(
                         obscureText: _obscure2,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -230,6 +280,18 @@ class _AuthFormState extends State<AuthForm> {
                         obscuringCharacter: '*',
                         controller: confPass,
                         decoration: InputDecoration(
+                          label: Text(
+                            "Confirm Password",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: pageHeight * 0.001,
+                          ),
                           suffixIcon: IconButton(
                             icon: _obscure2
                                 ? const Icon(Icons.visibility_off)
@@ -252,6 +314,7 @@ class _AuthFormState extends State<AuthForm> {
               ],
             ),
           ),
+          verticalSpacing(pageHeight * 0.02),
           Center(
             child: SizedBox(
               width: pageWidth * 0.56,

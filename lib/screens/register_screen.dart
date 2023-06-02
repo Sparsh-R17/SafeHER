@@ -21,10 +21,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final pageWidth = MediaQuery.of(context).size.width;
     final pageHeight = MediaQuery.of(context).size.height;
-    final _firebaseAuth = FirebaseAuth.instance;
+    final firebaseAuth = FirebaseAuth.instance;
     UserCredential userCred;
 
-    void _submit(
+    void submit(
       String email,
       String pass,
       String first,
@@ -33,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ) async {
       if (auth == Auth.login) {
         try {
-          userCred = await _firebaseAuth.signInWithEmailAndPassword(
+          userCred = await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: pass);
         } on FirebaseAuthException catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
       } else {
         try {
-          userCred = await _firebaseAuth.createUserWithEmailAndPassword(
+          userCred = await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: pass);
           userCred.user!.updateDisplayName("$first $last");
         } on FirebaseAuthException catch (e) {
@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               verticalSpacing(pageHeight * 0.012),
               AuthForm(
                 authType: authType,
-                submitForm: _submit,
+                submitForm: submit,
                 screenChange: stateChange,
               ),
             ],

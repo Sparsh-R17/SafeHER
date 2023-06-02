@@ -2,14 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'providers/contacts.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/internet_connectivity.dart';
 import 'firebase_options.dart';
+import 'providers/contacts.dart';
 import 'providers/trigger.dart';
 import 'screens/emergency_contacts.dart';
 import 'screens/main_screen.dart';
+import 'screens/medical_info.dart';
 import 'screens/register_screen.dart';
 
 void main() async {
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
             routes: {
               EmergencyContacts.routeName: (context) =>
                   const EmergencyContacts(),
+              MedicalInfo.routeName: (context) => const MedicalInfo(),
             },
           );
         },
