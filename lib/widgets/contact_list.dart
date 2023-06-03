@@ -62,11 +62,12 @@ class ContactList extends StatelessWidget {
                         onPressed: () => Navigator.pop(context),
                         child: const Text('No')),
                     TextButton(
-                        onPressed: () {
-                          provider.removeContacts(index);
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Yes')),
+                      onPressed: () {
+                        provider.removeContacts(index);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Yes'),
+                    ),
                   ],
                 );
               },

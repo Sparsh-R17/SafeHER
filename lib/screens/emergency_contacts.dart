@@ -165,7 +165,7 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
     double pageWidth,
     double pageHeight,
     TextEditingController contactController,
-    List<String?> _selectedContact,
+    List<String?> selectedContact,
   ) async {
     return showDialog(
       context: context,
@@ -228,7 +228,6 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
                           },
                         ),
                         verticalSpacing(pageHeight * 0.025),
-                        // if (MediaQuery.of(context).viewInsets.bottom == 0)
                         SizedBox(
                           height: pageHeight * 0.6,
                           child: ListView.builder(
@@ -239,13 +238,12 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
                                 pageWidth,
                                 value.contacts,
                                 index,
-                                _selectedContact,
+                                selectedContact,
                               );
                             },
                           ),
                         ),
                         const Spacer(),
-                        // if (MediaQuery.of(context).viewInsets.bottom == 0)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -255,7 +253,7 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
                             ),
                             TextButton(
                               onPressed: () {
-                                value.addEmergency(_selectedContact);
+                                value.addEmergency(selectedContact);
                                 Navigator.pop(context);
                                 fetchContacts();
                               },
@@ -280,24 +278,24 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
     double pageWidth,
     List<Contact> emergencyContactsList,
     int index,
-    List<String?> _selectedContact,
+    List<String?> selectedContact,
   ) {
     return StatefulBuilder(
       builder: (context, setState) {
         return CheckboxListTile.adaptive(
           contentPadding: EdgeInsets.zero,
           controlAffinity: ListTileControlAffinity.leading,
-          value: _selectedContact
+          value: selectedContact
               .contains(emergencyContactsList[index].displayName),
           onChanged: (value) {
             setState(
               () {
-                if (_selectedContact
+                if (selectedContact
                     .contains(emergencyContactsList[index].displayName)) {
-                  _selectedContact.removeWhere((element) =>
+                  selectedContact.removeWhere((element) =>
                       element == emergencyContactsList[index].displayName);
                 } else {
-                  _selectedContact
+                  selectedContact
                       .add(emergencyContactsList[index].displayName!);
                 }
               },

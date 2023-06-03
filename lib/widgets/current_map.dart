@@ -146,6 +146,7 @@ class _CurrentMapState extends State<CurrentMap> {
                                 'No ${safePlaces[index]['title']} found in 1.5km radius'),
                           ),
                         );
+                        return '';
                       });
 
                       setState(() {

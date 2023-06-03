@@ -51,6 +51,7 @@ dependencies:
   provider: ^6.0.5
   sensors_plus: ^2.0.2
   shake_event: ^0.0.9
+  sqflite: ^2.2.8+4
   system_alert_window: ^1.2.1
   tflite_flutter: ^0.9.0
   uuid: ^3.0.7
