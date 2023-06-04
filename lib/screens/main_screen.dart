@@ -129,7 +129,6 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
   @override
   Widget build(BuildContext context) {
     final connection = Provider.of<InternetConnection>(context);
-    print('Map Loading started');
 
     return connection.status != ConnectivityMode.waiting
         ? connection.status == ConnectivityMode.offline

@@ -168,6 +168,7 @@ class _MedicalInfoState extends State<MedicalInfo> {
                       data: info[index].text,
                       subtitle: info[index].subtitle,
                       med: true,
+                      index: index,
                     );
                   },
                 ),
