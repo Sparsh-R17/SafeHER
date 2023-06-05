@@ -234,12 +234,16 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
                             padding: EdgeInsets.zero,
                             itemCount: value.contacts.length,
                             itemBuilder: (context, index) {
-                              return contactsSelection(
-                                pageWidth,
-                                value.contacts,
-                                index,
-                                selectedContact,
-                              );
+                              if (value.contacts[index].displayName == null) {
+                                return const SizedBox();
+                              } else {
+                                return contactsSelection(
+                                  pageWidth,
+                                  value.contacts,
+                                  index,
+                                  selectedContact,
+                                );
+                              }
                             },
                           ),
                         ),

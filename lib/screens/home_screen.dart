@@ -9,7 +9,7 @@ import '../providers/trigger.dart';
 import '../utils/app_dimension.dart';
 import '../utils/sos_fn.dart';
 import '../widgets/current_map.dart';
-import 'commmunity_screen.dart';
+import 'community_screen.dart';
 import 'offline_home.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -77,12 +77,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CommunityScreen()));
-                    },
+                    onPressed: () =>
+                        Navigator.pushNamed(context, CommunityScreen.routeName),
                     style: ButtonStyle(
                       minimumSize: MaterialStatePropertyAll(
                         Size(pageWidth * 0.1, pageHeight * 0.045),

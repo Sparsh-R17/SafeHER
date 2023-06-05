@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/item_card.dart';
 
 class CommunityScreen extends StatefulWidget {
+  static const routeName = '/community-screen';
   const CommunityScreen({super.key});
 
   @override

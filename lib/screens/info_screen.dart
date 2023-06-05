@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'medical_info.dart';
-import '../utils/app_dimension.dart';
 
+import '../utils/app_dimension.dart';
 import '../widgets/info_tile.dart';
+import 'checklist_screen.dart';
+import 'community_screen.dart';
 import 'emergency_contacts.dart';
+import 'medical_info.dart';
 
 class InfoData {
   final IconData icon;
@@ -41,12 +43,12 @@ class _InfoScreenState extends State<InfoScreen> {
     InfoData(
       icon: Icons.checklist_outlined,
       text: "Checklist",
-      pageRoute: EmergencyContacts.routeName,
+      pageRoute: CheckListScreen.routeName,
     ),
     InfoData(
       icon: Icons.storefront_outlined,
       text: "Community",
-      pageRoute: EmergencyContacts.routeName,
+      pageRoute: CommunityScreen.routeName,
     ),
     InfoData(
       icon: Icons.hiking_outlined,
@@ -193,7 +195,7 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.home,
+                  Icons.home_outlined,
                   color: Theme.of(context).colorScheme.onSecondaryContainer,
                   size: pageHeight * 0.03,
                 ),
@@ -202,7 +204,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 subtitle: Text(
-                  "Baba babham bole street",
+                  "Girls Hostel VIT Bhopla",
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),

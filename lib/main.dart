@@ -8,6 +8,8 @@ import '/providers/internet_connectivity.dart';
 import 'firebase_options.dart';
 import 'providers/contacts.dart';
 import 'providers/trigger.dart';
+import 'screens/checklist_screen.dart';
+import 'screens/community_screen.dart';
 import 'screens/emergency_contacts.dart';
 import 'screens/main_screen.dart';
 import 'screens/medical_info.dart';
@@ -71,6 +73,8 @@ class MyApp extends StatelessWidget {
               EmergencyContacts.routeName: (context) =>
                   const EmergencyContacts(),
               MedicalInfo.routeName: (context) => const MedicalInfo(),
+              CheckListScreen.routeName: (context) => const CheckListScreen(),
+              CommunityScreen.routeName: (context) => const CommunityScreen(),
             },
           );
         },
