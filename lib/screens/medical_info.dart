@@ -5,12 +5,10 @@ import '../widgets/info_tile.dart';
 class MedInfo {
   final IconData icon;
   final String text;
-  final String subtitle;
 
   MedInfo({
     required this.icon,
     required this.text,
-    required this.subtitle,
   });
 }
 
@@ -23,23 +21,19 @@ class MedicalInfo extends StatefulWidget {
 
 class _MedicalInfoState extends State<MedicalInfo> {
   List<MedInfo> info = [
-    MedInfo(icon: Icons.bloodtype_outlined, text: "Blood Type", subtitle: "B+"),
+    MedInfo(icon: Icons.bloodtype_outlined, text: "Blood Type",),
     MedInfo(
         icon: Icons.medical_information_outlined,
-        text: "Allergies",
-        subtitle: "Dust allergy, Pollen allergies"),
+        text: "Allergies",),
     MedInfo(
         icon: Icons.vaccines_outlined,
-        text: "Ongoing Medication",
-        subtitle: "Serotonin"),
+        text: "Ongoing Medication",),
     MedInfo(
         icon: Icons.history_toggle_off_outlined,
-        text: "Past Medical History",
-        subtitle: "NA"),
+        text: "Past Medical History",),
     MedInfo(
         icon: Icons.medical_services_outlined,
-        text: "Family Doctor Info",
-        subtitle: "NA"),
+        text: "Family Doctor Info",),
   ];
 
   @override
@@ -166,7 +160,6 @@ class _MedicalInfoState extends State<MedicalInfo> {
                       icon: info[index].icon,
                       pageHeight: pageHeight,
                       data: info[index].text,
-                      subtitle: info[index].subtitle,
                       med: true,
                       index: index,
                     );

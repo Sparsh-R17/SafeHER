@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:kavach/screens/location_share_screen.dart';
 
 import '../utils/app_dimension.dart';
 import 'option_selector.dart';
 
-class LocationShare extends StatelessWidget {
+class LocationShare extends StatefulWidget {
   const LocationShare({super.key});
+
+  @override
+  State<LocationShare> createState() => _LocationShareState();
+}
+
+String reason = "";
+Duration duration = const Duration(minutes: 0);
+
+class _LocationShareState extends State<LocationShare> {
+  void _setValues(
+    String selectedReason,
+    Duration selectedDuration,
+  ) {
+    setState(() {
+      reason = selectedReason;
+      duration = selectedDuration;
+    });
+  }
+
+  String displayDuration(Duration duration) {
+    String result = "Duration";
+    if (duration == const Duration(minutes: 15)) {
+      result = "15 Minutes";
+    } else if (duration == const Duration(minutes: 30)) {
+      result = "30 Minutes";
+    } else if (duration == const Duration(days: 1)) {
+      result = "Manually End";
+    } else {
+      result =
+          "${duration.inHours} Hours and ${duration.inMinutes.remainder(60)} minutes";
+      if (duration.inMinutes.remainder(60) == 0) {
+        result = "${duration.inHours} Hours";
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +50,6 @@ class LocationShare extends StatelessWidget {
 
     String infoLocation =
         'When you start a location sharing, your real-time location stays private to you until emergency sharing starts.';
-
     return Container(
       height: pageHeight * 0.55,
       decoration: BoxDecoration(
@@ -53,14 +89,20 @@ class LocationShare extends StatelessWidget {
             ),
           ),
           verticalSpacing(pageHeight * 0.04),
-          const OptionSelector(
+          OptionSelector(
             icon: Icons.description_outlined,
-            text: "Reason",
+            text: reason == "" ? "Reason" : reason,
+            index: 0,
+            changeReason: _setValues,
           ),
           verticalSpacing(pageHeight * 0.02),
-          const OptionSelector(
+          OptionSelector(
             icon: Icons.timer_outlined,
-            text: 'Duration',
+            text: duration == const Duration(minutes: 0)
+                ? 'Duration'
+                : displayDuration(duration),
+            index: 1,
+            changeReason: _setValues,
           ),
           const Spacer(),
           Row(
@@ -72,7 +114,34 @@ class LocationShare extends StatelessWidget {
               ),
               const Spacer(),
               FilledButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (reason == "" || duration == const Duration(minutes: 0)) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Alert!"),
+                            content: const Text("Please enter the details"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("OK"))
+                            ],
+                          );
+                        });
+                  } else {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                              height: pageHeight * 0.2,
+                              width: pageWidth,
+                              child: Text("Bottom Modal Sheet"));
+                        });
+                  }
+                },
                 child: const Text('Next'),
               ),
               horizontalSpacing(pageWidth * 0.045),

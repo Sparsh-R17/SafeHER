@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/app_dimension.dart';
 
@@ -168,7 +167,7 @@ class _CallScreenState extends State<CallScreen> {
                   .copyWith(fontWeight: FontWeight.w500),
             ),
           )),
-          verticalSpacing(pageHeight * 0.04),
+          verticalSpacing(pageHeight * 0.03),
           Center(
             child: SizedBox(
               width: pageWidth * 0.475,
@@ -182,38 +181,27 @@ class _CallScreenState extends State<CallScreen> {
               ),
             ),
           ),
-          verticalSpacing(pageHeight * 0.005),
-          Center(
-            child: SizedBox(
-              height: pageHeight * 0.085,
-              width: pageWidth * 0.43,
-              child: FloatingActionButton.extended(
-                backgroundColor: Theme.of(context).colorScheme.errorContainer,
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  "assets/svg/e911.svg",
-                  fit: BoxFit.scaleDown,
-                  width: pageWidth * 0.138,
-                  height: pageHeight * 0.0625,
-                ),
-                label: Padding(
-                  padding: EdgeInsets.only(left: pageWidth * 0.02),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Call 911',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontWeight: FontWeight.w500)
-                          .apply(fontSizeFactor: 1.2),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // verticalSpacing(pageHeight * 0.005),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: pageHeight * 0.02),
+        child: FloatingActionButton.extended(
+          backgroundColor: Theme.of(context).colorScheme.errorContainer,
+          onPressed: () {},
+          icon: Icon(Icons.cell_tower_outlined,
+              color: Theme.of(context).colorScheme.onBackground),
+          label: Text(
+            'Call 911',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.w500)
+                .apply(fontSizeFactor: 1.2),
+          ),
+        ),
       ),
     );
   }
