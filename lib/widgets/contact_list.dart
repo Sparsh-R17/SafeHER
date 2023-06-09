@@ -49,29 +49,42 @@ class ContactList extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text(
-                    'Confirm Delete ?',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  actions: [
-                    TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('No')),
-                    TextButton(
-                      onPressed: () {
-                        provider.removeContacts(index);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Yes'),
-                    ),
-                  ],
-                );
-              },
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: const Duration(seconds: 15),
+                content: const Text('Successfully removed'),
+                action: SnackBarAction(
+                  label: 'UNDO',
+                  onPressed: () => provider.recoverContact(),
+                ),
+              ),
             );
+            print('Removed Contact');
+            provider.removeContacts(index);
+
+            // showDialog(
+            //   context: context,
+            //   builder: (context) {
+            //     return AlertDialog(
+            //       title: Text(
+            //         'Confirm Delete ?',
+            //         style: Theme.of(context).textTheme.titleLarge,
+            //       ),
+            //       actions: [
+            //         TextButton(
+            //             onPressed: () => Navigator.pop(context),
+            //             child: const Text('No')),
+            //         TextButton(
+            //           onPressed: () {
+            //             provider.removeContacts(index);
+            //             Navigator.pop(context);
+            //           },
+            //           child: const Text('Yes'),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
           },
           icon: const Icon(Icons.close),
           style: const ButtonStyle(

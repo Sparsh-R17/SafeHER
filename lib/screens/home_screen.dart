@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  ElevatedButton(
+                  IconButton.filled(
                     onPressed: () =>
                         Navigator.pushNamed(context, CommunityScreen.routeName),
                     style: ButtonStyle(
@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                         CircleBorder(),
                       ),
                     ),
-                    child: Icon(
+                    icon: Icon(
                       Icons.groups,
                       color: Theme.of(context).colorScheme.onSecondaryContainer,
                     ),

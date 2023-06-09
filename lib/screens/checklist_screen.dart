@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/item_checklist_tile.dart';
+
 class CheckListScreen extends StatefulWidget {
   static const routeName = '/checklist';
   const CheckListScreen({super.key});
@@ -30,6 +32,8 @@ class _CheckListScreenState extends State<CheckListScreen>
     [],
     [],
   ];
+
+  List<List<bool>> isSelected = [[], [], []];
 
   final TextEditingController _tabNameController = TextEditingController();
 
@@ -97,6 +101,7 @@ class _CheckListScreenState extends State<CheckListScreen>
                                 );
                                 pageIndex = _myTabs.length - 2;
                                 _items.insert(_myTabs.length - 1, []);
+                                isSelected.insert(_myTabs.length - 1, []);
                                 Navigator.pop(context);
                                 _tabNameController.clear();
                               }
@@ -125,55 +130,7 @@ class _CheckListScreenState extends State<CheckListScreen>
                       ),
                 ),
               )
-            : ListView.builder(
-                itemCount: _items[pageIndex].length,
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    direction: DismissDirection.endToStart,
-                    confirmDismiss: (direction) {
-                      return showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                                title: const Text('Are you sure ?'),
-                                content: const Text(
-                                    'Do you want to remove the item from the list?'),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('NO'),
-                                    onPressed: () =>
-                                        Navigator.pop(context, false),
-                                  ),
-                                  TextButton(
-                                    child: const Text('YES'),
-                                    onPressed: () {
-                                      _items[pageIndex].removeAt(index);
-                                      Navigator.pop(context, true);
-                                    },
-                                  ),
-                                ],
-                              ));
-                    },
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      color: Theme.of(context).colorScheme.error,
-                      child: Padding(
-                        padding: EdgeInsets.only(right: pageWidth * 0.04),
-                        child: Icon(
-                          Icons.delete,
-                          color: Theme.of(context).colorScheme.onError,
-                        ),
-                      ),
-                    ),
-                    key: UniqueKey(),
-                    child: CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: false,
-                      onChanged: (value) {},
-                      title: Text(_items[pageIndex][index]),
-                    ),
-                  );
-                },
-              ),
+            : ItemChecklistTile(items: _items, pageIndex: pageIndex,isSelected : isSelected),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(
@@ -245,6 +202,7 @@ class _CheckListScreenState extends State<CheckListScreen>
                         IconButton(
                           onPressed: () {
                             _items[pageIndex].add(_itemNameController.text);
+                            isSelected[pageIndex].add(false);
                             Navigator.pop(context);
                             _itemNameController.clear();
                           },

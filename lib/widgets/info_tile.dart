@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class InfoTile extends StatefulWidget {
-  const InfoTile(
-      {super.key,
-      required this.pageHeight,
-      required this.icon,
-      required this.data,
-      required this.med,
-      this.route,
-      this.subtitle,
-      this.index});
+  const InfoTile({
+    super.key,
+    required this.pageHeight,
+    required this.icon,
+    required this.data,
+    required this.med,
+    this.route,
+    this.subtitle,
+    this.index,
+  });
 
   final double pageHeight;
   final IconData icon;

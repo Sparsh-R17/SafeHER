@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
 class ContactProvider with ChangeNotifier {
   List<Contact> _contacts = [];
   var emergencyContacts = <Map<String, String>>[];
+  Map<String, String>? backupContact;
 
   List<Contact> get contacts {
     return [..._contacts];
@@ -29,7 +32,16 @@ class ContactProvider with ChangeNotifier {
   }
 
   void removeContacts(int index) {
+    backupContact = emergencyContacts[index];
     emergencyContacts.removeAt(index);
+    Timer(const Duration(seconds: 15), () {
+      backupContact = null;
+    });
+    notifyListeners();
+  }
+
+  void recoverContact() {
+    emergencyContacts.add(backupContact!);
     notifyListeners();
   }
 

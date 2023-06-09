@@ -83,31 +83,6 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
                   margin: EdgeInsets.symmetric(
                     horizontal: pageWidth * 0.09,
                   ),
-                  // child: const Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       'Add Contacts',
-                  //       style:
-                  //           Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  //                 color: Theme.of(context)
-                  //                     .colorScheme
-                  //                     .onSurfaceVariant,
-                  //               ),
-                  //     ),
-                  //     IconButton.filled(
-                  //       onPressed: () {
-                  //         addContactsDialog(
-                  //           context,
-                  //           pageWidth,
-                  //           pageHeight,
-                  //           contactController,
-                  //         );
-                  //       },
-                  //       icon: const Icon(Icons.add),
-                  //     ),
-                  //   ],
-                  // ),
                 ),
                 verticalSpacing(pageHeight * 0.035),
                 Padding(
