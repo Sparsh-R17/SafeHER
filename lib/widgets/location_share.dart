@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/screens/location_share_screen.dart';
+import 'package:kavach/widgets/location_contacts.dart';
 
 import '../utils/app_dimension.dart';
 import 'option_selector.dart';
@@ -132,13 +132,22 @@ class _LocationShareState extends State<LocationShare> {
                           );
                         });
                   } else {
+                    Navigator.pop(context);
                     showModalBottomSheet(
                         context: context,
+                        isDismissible: false,
+                        enableDrag: false,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          ),
+                        ),
                         builder: (context) {
-                          return Container(
-                              height: pageHeight * 0.2,
-                              width: pageWidth,
-                              child: Text("Bottom Modal Sheet"));
+                          return LocationContacts(
+                            reason: selectedReason,
+                            duration: selectedDuration,
+                          );
                         });
                   }
                 },

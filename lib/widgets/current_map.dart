@@ -46,7 +46,7 @@ class _CurrentMapState extends State<CurrentMap> {
     try {
       final locData = await Location().getLocation();
       currentLocation = locData;
-      print(nearPlaces);
+      // print(nearPlaces);
       _generateMap(locData.latitude!, locData.longitude!, nearPlaces);
     } catch (e) {
       print(e);

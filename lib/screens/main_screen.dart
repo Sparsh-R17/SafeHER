@@ -80,7 +80,6 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
 
   @override
   shakeEventListener() {
-    // TODO: implement shakeEventListener
     print('shake');
     if (shakeCount == 0) {
       shakeCount += 1;
@@ -136,17 +135,17 @@ class _MainScreenState extends State<MainScreen> with ShakeHandler {
             : StreamBuilder(
                 stream: firebaseRef.onValue,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                  // if (snapshot.connectionState == ConnectionState.waiting) {
+                  //   return const Center(
+                  //     child: CircularProgressIndicator(),
+                  //   );
+                  // }
 
-                  var triggerValue = snapshot.data!.snapshot.value as Map;
-                  if (triggerValue['userId'] == true) {
-                    // _showNotification();
-                    callTriggerForUser(false);
-                  }
+                  // var triggerValue = snapshot.data!.snapshot.value as Map;
+                  // if (triggerValue['userId'] == true) {
+                  //   // _showNotification();
+                  //   callTriggerForUser(false);
+                  // }
                   return mainPageWidget(context);
                 })
         : const Center(

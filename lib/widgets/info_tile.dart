@@ -53,7 +53,6 @@ class _InfoTileState extends State<InfoTile> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     allergies.dispose();
     medication.dispose();
@@ -82,7 +81,7 @@ class _InfoTileState extends State<InfoTile> {
         ),
         subtitle: widget.med
             ? Text(
-                widget.subtitle!,
+                widget.subtitle??"null",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSecondaryContainer,
                 ),

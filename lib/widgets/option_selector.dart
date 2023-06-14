@@ -43,9 +43,13 @@ List durations = [
 ];
 String selectedReason = "Walking Alone";
 Duration selectedDuration = const Duration(minutes: 0);
+TextEditingController custom = TextEditingController();
+@override
+void dispose() {
+  custom.dispose();
+}
 
 class _OptionSelectorState extends State<OptionSelector> {
-  TextEditingController custom = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final pageHeight = MediaQuery.of(context).size.height;
@@ -111,7 +115,7 @@ class _OptionSelectorState extends State<OptionSelector> {
                                     setState(() {
                                       selectedReason = val!;
                                       isEnabled = false;
-                                      print("This - " + selectedReason);
+                                      print("This - $selectedReason");
                                     });
                                   },
                                   title: Row(
@@ -237,7 +241,7 @@ class _OptionSelectorState extends State<OptionSelector> {
                                               const Duration(days: 1);
                                         } else {
                                           Navigator.of(context).pop();
-                                          var abc = await showTimePicker(
+                                          var time = await showTimePicker(
                                               context: context,
                                               builder:
                                                   (context, Widget? child) {
@@ -250,13 +254,13 @@ class _OptionSelectorState extends State<OptionSelector> {
                                                 );
                                               },
                                               initialTime:
-                                                  TimeOfDay(hour: 0, minute: 0),
+                                                  const TimeOfDay(hour: 0, minute: 0),
                                               initialEntryMode:
                                                   TimePickerEntryMode
                                                       .inputOnly);
                                           selectedDuration = Duration(
-                                            hours: abc?.hour ?? 0,
-                                            minutes: abc?.minute ?? 0,
+                                            hours: time?.hour ?? 0,
+                                            minutes: time?.minute ?? 0,
                                           );
                                         }
                                         print(selectedDuration);

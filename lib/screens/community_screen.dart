@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/item_card.dart';
+import 'content_screen.dart';
 
 class CommunityScreen extends StatefulWidget {
   static const routeName = '/community-screen';
@@ -75,7 +76,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
         ),
         body: TabBarView(children: [
           marketPlace(pageHeight, pageWidth),
-          const Center(child: Text("Page is under construction!")),
+          // const Center(child: Text("Page is under construction!")),
+          const ContentScreen(),
         ]),
       ),
     );

@@ -19,7 +19,6 @@ class EmergencyContacts extends StatefulWidget {
 class _EmergencyContactsState extends State<EmergencyContacts> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scrollDirection.addListener(() {
       if (scrollDirection.position.userScrollDirection ==
