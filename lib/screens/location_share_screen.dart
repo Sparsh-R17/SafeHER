@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/utils/app_dimension.dart';
-import 'package:kavach/utils/sos_fn.dart';
+
+import '../utils/app_dimension.dart';
+import '../utils/sos_fn.dart';
 
 class LocationShareScreen extends StatefulWidget {
   final String reason;

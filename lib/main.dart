@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Trigger>(
         builder: (context, value, child) {
-          // final toShowDialong = value.pageTrigger;
+          // final toShowDialog = value.pageTrigger;
 
           return MaterialApp(
             title: 'Kavach',

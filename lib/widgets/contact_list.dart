@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../providers/contacts.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/contacts.dart';
 import '../utils/app_dimension.dart';
 
 class ContactList extends StatelessWidget {

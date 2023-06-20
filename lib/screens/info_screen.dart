@@ -233,6 +233,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     icon: infoData[index].icon,
                     route: infoData[index].pageRoute,
                     med: false,
+                    index: index,
                   );
                 },
               )

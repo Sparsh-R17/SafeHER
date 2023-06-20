@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'tracking_dialog.dart';
+
 class InfoTile extends StatefulWidget {
   const InfoTile({
     super.key,
@@ -66,7 +68,10 @@ class _InfoTileState extends State<InfoTile> {
     return ListTile(
         leading: Padding(
           padding: widget.med
-              ? EdgeInsets.only(left: pageWidth * 0.01, right: pageWidth * 0.02)
+              ? EdgeInsets.only(
+                  left: pageWidth * 0.01,
+                  right: pageWidth * 0.02,
+                )
               : EdgeInsets.zero,
           child: Icon(
             widget.icon,
@@ -81,7 +86,7 @@ class _InfoTileState extends State<InfoTile> {
         ),
         subtitle: widget.med
             ? Text(
-                widget.subtitle??"null",
+                widget.subtitle ?? "null",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSecondaryContainer,
                 ),
@@ -89,7 +94,16 @@ class _InfoTileState extends State<InfoTile> {
             : null,
         onTap: () {
           if (widget.med == false) {
-            Navigator.pushNamed(context, widget.route!);
+            if (widget.index == 4) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const TrackingDialog();
+                },
+              );
+            } else {
+              Navigator.pushNamed(context, widget.route!);
+            }
           } else {
             if (widget.index == 0) {
               bloodSelection(context);
@@ -192,3 +206,4 @@ class _InfoTileState extends State<InfoTile> {
     );
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/providers/contacts.dart';
-import 'package:kavach/screens/location_share_screen.dart';
-import 'package:kavach/utils/sos_fn.dart';
+import '../providers/contacts.dart';
+import '../screens/location_share_screen.dart';
+import '../utils/sos_fn.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/app_dimension.dart';

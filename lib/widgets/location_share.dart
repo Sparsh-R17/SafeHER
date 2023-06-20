@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kavach/widgets/location_contacts.dart';
 
 import '../utils/app_dimension.dart';
+import 'location_contacts.dart';
 import 'option_selector.dart';
 
 class LocationShare extends StatefulWidget {
