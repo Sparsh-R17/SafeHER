@@ -206,4 +206,3 @@ class _InfoTileState extends State<InfoTile> {
     );
   }
 }
-

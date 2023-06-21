@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kavach/utils/app_dimension.dart';
+import '../utils/app_dimension.dart';
+import '../widgets/activity_tracker_dialog.dart';
+
+import 'activity_duration_dialog.dart';
 
 class TrackingDialog extends StatefulWidget {
   const TrackingDialog({super.key});
@@ -10,24 +12,7 @@ class TrackingDialog extends StatefulWidget {
 }
 
 class _TrackingDialogState extends State<TrackingDialog> {
-  List<Map> _activity = [
-    {
-      'text': "Running",
-      'icon': FontAwesomeIcons.personRunning,
-    },
-    {
-      'text': "Running",
-      'icon': FontAwesomeIcons.personRunning,
-    },
-    {
-      'text': "Running",
-      'icon': FontAwesomeIcons.personRunning,
-    },
-    {
-      'text': "Running",
-      'icon': FontAwesomeIcons.personRunning,
-    },
-  ];
+  List title = ["Choose Activity", "Duration"];
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +38,9 @@ class _TrackingDialogState extends State<TrackingDialog> {
               ),
             ),
             verticalSpacing(pageHeight * 0.025),
-            trackingCard(
-                ctx: context, title: "Choose Activity", icon: Icons.hiking),
+            trackingCard(ctx: context, icon: Icons.hiking, index: 0),
             verticalSpacing(pageHeight * 0.01),
-            trackingCard(
-                ctx: context, title: "Duration", icon: Icons.access_time),
+            trackingCard(ctx: context, icon: Icons.access_time, index: 1),
             verticalSpacing(pageHeight * 0.01),
             Padding(
               padding: EdgeInsets.only(
@@ -67,9 +50,18 @@ class _TrackingDialogState extends State<TrackingDialog> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text("Cancel")),
-                  TextButton(onPressed: () {}, child: const Text("Done")),
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed:
+                        title[0] == "Choose Activity" || title[1] == "Duration"
+                            ? null
+                            : () {
+                                print(title);
+                              },
+                    child: const Text("Done"),
+                  ),
                 ],
               ),
             )
@@ -79,10 +71,11 @@ class _TrackingDialogState extends State<TrackingDialog> {
     );
   }
 
-  Widget trackingCard(
-      {required BuildContext ctx,
-      required String title,
-      required IconData icon}) {
+  Widget trackingCard({
+    required BuildContext ctx,
+    required IconData icon,
+    required int index,
+  }) {
     final pageHeight = MediaQuery.of(ctx).size.height;
     final pageWidth = MediaQuery.of(ctx).size.width;
     return Container(
@@ -96,19 +89,29 @@ class _TrackingDialogState extends State<TrackingDialog> {
         child: InkWell(
           borderRadius: BorderRadius.circular(7),
           onTap: () async {
-            final res = await showDialog(
-              context: context,
-              builder: (context) {
-                return Dialog(
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop("Hello Buddy");
-                      },
-                      child: Text("Trial")),
-                );
-              },
-            );
-            print("MSG after pop - $res");
+            if (index == 1) {
+              final res = await showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return const ActivityDurationDialog();
+                },
+              );
+              setState(() {
+                title[index] = res;
+              });
+            } else {
+              final res = await showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return const ActivityTrackerDialog();
+                },
+              );
+              setState(() {
+                title[index] = res;
+              });
+            }
           },
           child: Row(
             children: [
@@ -118,7 +121,7 @@ class _TrackingDialogState extends State<TrackingDialog> {
                 color: Theme.of(ctx).colorScheme.primary,
               ),
               horizontalSpacing(pageWidth * 0.03),
-              Text(title),
+              Text(title[index]),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.only(right: pageWidth * 0.01),
