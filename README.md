@@ -33,8 +33,8 @@ A new-age safety mobile application made for women with all necessary SOS featur
 
 
 ## Contributors :
-1. [Sparsh-R17](https://github.com/Sparsh-R17)
-2. [Akash5336](https://github.com/Akash5336)
+1. [Sparsh Rajput](https://github.com/Sparsh-R17)
+2. [Akash P](https://github.com/Akash5336)
 
 ## Steps to run the App :
 Excited to experience WEATHERED? Here's how to set it up:
